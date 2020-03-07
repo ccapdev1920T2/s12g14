@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script>
+      $(document).ready(function() {
+        var sessionID = getParameterByName('sid');
+        if (sessionID) {
+          var user = fromSession(sessionID);
+          $("#user-dp").attr("src", '../' + user.bio.display);
+          var anchors = $("a").toArray();
+          for (var key in anchors) {
+            var anchor = anchors[key];
+            var link = $(anchor).attr("href");
+            if ($(anchor).hasClass('logout')) continue;
+            if (link !== '#') {
+              $(anchor).attr("href", link + '?sid=' + sessionID);
+            }
+          }
+          $("#registered-nav").show();
+        } else {
+          $("#unregistered-nav").show();
+        }
+      });
+    </script>
+    <title>View Profile</title>
+  </head>
+  <body class="bg-cstm-yellow-lightest">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-cstm-yellow">
+      <div class="container">
+        <a class="navbar-brand text-cstm-orange-darkest" href="../index.html"><i class="fa fa-cutlery"></i>&nbsp;&nbsp;&nbsp;Cooker</a>
+        <ul class="navbar-nav ml-auto mr-auto">
+          <li class="nav-item">
+            <div class="justify-content-md-center">
+              <form>
+                <div class="input-group mr-sm-2">
+                  <input type="text" name="q" class="form-control border-0" placeholder="Search recipes" style="width: 480px">
+                  <div class="input-group-append">
+                    <button class="btn btn-cstm-orange" type="button">
+                      <i class="fa fa-search text-cstm-orange-darkest"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+        </ul>
+        <div id="unregistered-nav" style="display:none;">
+          <ul class="navbar-nav mr-0">
+            <li class="nav-item">
+              <a class="nav-link" href="../login.html">Log in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../register.html">Register</a>
+            </li>
+          </ul>
+        </div>
+        <div id="registered-nav" style="display:none;">
+          <ul class="navbar-nav mr-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle pb-1 pt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img id="user-dp" src="" width="30" height="30" class="d-inline-block align-top rounded-circle" alt="">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item logout" href="../index.html">Log out</a>
+                <a class="dropdown-item" href="../editprofile.html">Edit profile</a>
+                <a class="dropdown-item" href="../createrecipe.html">Create recipe</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <main role="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-7 p-4 rounded bg-cstm-green-lightest"style="height:400px">
+            <h2 id="profile-name">Janet Ivanov</h2>
+            <h4 class="h-75 lead" id="profile-description">L💖VE is in the air. Gifted napper, talker, and ice cream eater. Probably the best meat eater in the world. In a world where you can be anyone, be yourself.</h4>
+            <small id="join-date" class="align-self-end">Joined on February 25, 2020</small>
+          </div>
+          <div class="col-5">
+            <img id="profile-image" class="rounded img-fluid" src="../assets/images/Faces/igor-rand-Af9YhuGE7Qs-unsplash.jpg" alt="Photo by Igor Rand on Unsplash">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="recipe-cards">
+            <h2>Their Recipes</h2>
+            <div class="row mt-4">
+              <div class="card-deck">
+                <div class="recipe-card card text-center">
+                  <img class="card-img-top" src="../assets/images/joseph-gonzalez-hTR1XPtTo_k-unsplash.jpg" alt="Pancake with Oranges and Blueberries (Photo by Joseph Gonzalez on Unsplash)">
+                  <div class="card-body bg-cstm-green-lighter">
+                      <h6 class="card-title">Pancake with Oranges and Blueberries</h6>
+                  </div>
+                </div>
+                <div class="recipe-card card text-center">
+                  <img class="card-img-top" src="../assets/images/stephen-walker-_-SwhhV7tSo-unsplash.jpg" alt="Baked Bread (Photo by Stephen Walker on Unsplash)">
+                  <div class="card-body bg-cstm-green-lighter">
+                      <h6 class="card-title">Baked Bread</h6>
+                  </div>
+                </div>
+                <div class="recipe-card card text-center">
+                  <img class="card-img-top" src="../assets/images/louis-hansel-shotsoflouis-dphM2U1xq0U-unsplash.jpg" alt="Burger with Tomato, Lettuce and Fries (Photo by Louis Hansel @shotsoflouis on Unsplash)">
+                  <div class="card-body bg-cstm-green-lighter">
+                      <h6 class="card-title">Burger with Tomato, Lettuce and Fries</h6>
+                  </div>
+                </div>
+                <div class="recipe-card card text-center">
+                  <img class="card-img-top" src="../assets/images/madeline-tallman-m5oypz13kkc-unsplash.jpg" alt="Frappe with Chocolate Crunch Sticks (Photo by Madeline Tallman on Unsplash)">
+                  <div class="card-body bg-cstm-green-lighter">
+                    <h6 class="card-title">Frappe with Chocolate Crunch Sticks</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-cstm-orange-darkest text-light ml-auto mr-auto mt-4 d-block">Show more</button>
+        </div>
+        <div class="row">
+          <h2>Likes</h2>
+          <div class="recipe-cards">
+            <div class="row mt-4">
+              <div class="card-deck">
+                <div class="recipe-card card text-center">
+                  <img class="card-img-top" src="../assets/images/luke-johnson-a4vZKIwoCUE-unsplash.jpg" alt="Hash Brown with Egg and Bacon (Photo by Luke Johnson on Unsplash)">
+                  <div class="card-body bg-cstm-green-lighter">
+                      <h6 class="card-title">Hash Brown with Egg and Bacon</h6>
+                  </div>
+                  </div>
+                  <div class="recipe-card card text-center">
+                    <img class="card-img-top" src="../assets/images/anthony-rosset-5vDeo9GVpdw-unsplash.jpg" alt="Ice Cream Bread (Photo by Anthony Rosset on Unsplash)">
+                    <div class="card-body bg-cstm-green-lighter">
+                        <h6 class="card-title">Ice Cream Bread</h6>
+                    </div>
+                  </div>
+                  <div class="recipe-card card text-center">
+                    <img class="card-img-top" src="../assets/images/nerfee-mirandilla-huE4NUt2gq8-unsplash.jpg" alt="White Pasta with Red Bell Pepper (Photo by Nerfee Mirandilla on Unsplash)">
+                    <div class="card-body bg-cstm-green-lighter">
+                      <h6 class="card-title">White Pasta with Red Bell Pepper</h6>
+                    </div>
+                    </div>
+                  <div class="recipe-card card text-center">
+                    <img class="card-img-top" src="../assets/images/olga-kudriavtseva-TG48AyjXsXk-unsplash.jpg" alt="Strawberry Cake (Photo by Olga Kudriavtseva on Unsplash)">
+                    <div class="card-body bg-cstm-green-lighter">
+                        <h6 class="card-title">Strawberry Cake</h6>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-cstm-orange-darkest text-light ml-auto mr-auto mt-4 d-block">Show more</button>
+        </div>
+        <div class="row">
+          <div class="recipe-cards">
+            <h2>Comments</h2>
+            <div class="row mt-4">
+              <div class="card-deck">
+                <div class="row p-1">
+                  <div class="col-3">
+                    <div class="recipe-card card text-center">
+                      <img class="card-img-top" src="../assets/images/anthony-rosset-5vDeo9GVpdw-unsplash.jpg" alt="Ice Cream Bread (Photo by Anthony Rosset on Unsplash)">
+                      <div class="card-body bg-cstm-green-lighter">
+                          <h6 class="card-title">Ice Cream Bread</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col p-4 rounded bg-cstm-orange-lighter">
+                    <h4 class="lead" id="input-recipe-name">This looks so delicious!</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-cstm-orange-darkest text-light ml-auto mr-auto mt-4 d-block">Show more</button>
+        </div>
+      </div>
+      <!-- TODO: add aria-describedby descriptors using small for accessibility -->
+    </main>
+
+    <footer class="footer">
+      <div class="mt-3 p-4 bg-cstm-yellow-darker">
+        <div class="container">
+          <div id="copyright">
+            Copyright &copy; 2020
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>

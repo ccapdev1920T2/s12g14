@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script>
+      $(document).ready(function() {
+        var sessionID = getParameterByName('sid');
+        if (sessionID) {
+          var user = fromSession(sessionID);
+          $("#user-dp").attr("src", '../' + user.bio.display);
+          var anchors = $("a").toArray();
+          for (var key in anchors) {
+            var anchor = anchors[key];
+            var link = $(anchor).attr("href");
+            if ($(anchor).hasClass('logout')) continue;
+            if (link !== '#') {
+              $(anchor).attr("href", link + '?sid=' + sessionID);
+            }
+          }
+          $("#registered-nav").show();
+          $("#registered-like").show();
+        } else {
+          $("#unregistered-nav").show();
+          $("#unregistered-like").show();
+        }
+      });
+    </script>
+    <title>Cooking recipe website</title>
+  </head>
+
+  <body class="bg-cstm-yellow-lightest">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-cstm-yellow">
+      <div class="container">
+        <a class="navbar-brand text-cstm-orange-darkest" href="../index.html"><i class="fa fa-cutlery"></i>&nbsp;&nbsp;&nbsp;Cooker</a>
+        <ul class="navbar-nav ml-auto mr-auto">
+          <li class="nav-item">
+            <div class="justify-content-md-center">
+              <form>
+                <div class="input-group mr-sm-2">
+                  <input type="text" name="q" class="form-control border-0" placeholder="Search recipes" style="width: 480px">
+                  <div class="input-group-append">
+                    <button class="btn btn-cstm-orange" type="button">
+                      <i class="fa fa-search text-cstm-orange-darkest"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+        </ul>
+        <div id="unregistered-nav" style="display:none;">
+          <ul class="navbar-nav mr-0">
+            <li class="nav-item">
+              <a class="nav-link" href="../login.html">Log in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../register.html">Register</a>
+            </li>
+          </ul>
+        </div>
+        <div id="registered-nav" style="display:none;">
+          <ul class="navbar-nav mr-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle pb-1 pt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img id="user-dp" src="" width="30" height="30" class="d-inline-block align-top rounded-circle" alt="">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item logout" href="../index.html">Log out</a>
+                <a class="dropdown-item" href="../editprofile.html">Edit profile</a>
+                <a class="dropdown-item" href="../createrecipe.html">Create recipe</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col col-sm-7 bg-cstm-green-lightest">
+            <h1><strong>Grilled Meat</strong></h1>
+            <div id="profile-area">
+              <a href="#" class="no-hover">
+                <img id="profile-img" class="rounded-circle" src="../assets/images/Faces/alexander-krivitskiy-nz8jK82uF2o-unsplash.jpg">
+                <span id="profile-name" class="ml-1 text-dark">Alisha Natasha</span>
+              </a>
+            </div>
+            <div id="recipe-area" class="h-50 mt-5">
+              <h2 id="servings"><em>Servings:</em></h2>
+              <h4 id="servings-number"><em>6</em></h4>
+            </div>
+            <div id="recipe-interactions" class="my-3">
+              <h5 class="float-left">0 likes</h5>
+              <h5 class="float-right">
+                <span id="registered-like" style="display:none;"><a href="#" class="text-dark">Like this recipe!</a></span>
+                <span id="unregistered-like" style="display:none;">Register to like recipes!</span>
+              </h5>
+            </div>
+          </div>
+          <div class="col col-sm-4 bg-cstm-orange">
+            <img src="../assets/images/beyond-meat-AyOKedZlIrI-unsplash.jpg" class="rounded img-fluid">
+          </div>
+        </div>
+        <div class="row bg-cstm-green-lightest my-3 p-3">
+          <h1 id="description-header"><strong>Description</strong></h1>
+          <h3 id="description"><br>This was taught to me by my mother. I hope you like it!</h3>
+        </div>
+        <div class="row bg-cstm-green-lightest my-3 p-3">
+          <h1 id="ingredients-header"><strong>Ingredients</strong></h1>
+          <div id="ingredients"><br><br>
+            2 teaspoons (6g) whole black peppercorns<br>
+            1 1/2 teaspoons (4g) whole coriander seed<br>
+            1 teaspoon (4g) whole cumin seed<br>
+            2 whole cloves (1g)<br>
+            2 whole bay leaves<br>
+            2 teaspoons (8g) sweet paprika<br>
+            1/2 teaspoon (2g) cayenne pepper<br>
+            3 teaspoons (12g) kosher salt (if using table salt, use 1 1/2 teaspoons by volume, or 12g by weight)<br>
+            1 teaspoon (4g) amchur powder (see note)<br>
+            1 medium red onion, roughly chopped (about 6 ounces; 170g)<br>
+            2 cups loosely packed fresh cilantro leaves (about 2 ounces; 55g)<br>
+            4 medium cloves garlic, roughly chopped (about 3/4 ounce; 20g)<br>
+            1 1/2 tablespoons grated fresh ginger, roughly chopped (about 3/4 ounce; 20g)<br>
+            1 to 4 green Thai bird chilies, stems removed (to taste; they are very spicy)<br>
+            1 1/2 teaspoons sugar (about 1/4 ounce; 7g)<br>
+            2 pounds (1kg) ground lamb or beef (about 20% fat content)<br>
+            Shredded cabbage <br>
+            Sliced cucumbers, tomatoes (cut into bite-size pieces), and lime wedges<br>
+          
+          </div>
+        </div>
+        <div class="row bg-cstm-green-lightest my-3 p-3">
+          <h1 id="steps-header"><strong>Steps</strong></h1>
+          <div id="steps">
+              1. Toast peppercorns, coriander, cumin, and cloves in a dry skillet over medium heat, tossing and shaking frequently, until fragrant, about 1 minute. Transfer to a spice grinder. Add bay leaves and grind to a fine powder. Transfer to the bowl of a food processor.
+              <br>2. Add paprika, cayenne, salt, amchur, red onion, cilantro, garlic, ginger, chilies, and sugar to bowl of food processor and process until a fine paste has formed, about 30 seconds. Transfer mixture to a double layer of heavy-duty paper towels or a triple layer of cheesecloth. Fold towels over mixture and press gently to start extracting liquid. Lift up towels and form a bundle. Squeeze gently over sink to remove excess liquid. The remaining mixture should be dry enough to crumble when picked up.
+              <br>3. Combine ground beef or lamb with the spice/aromatic blend and massage with your hands until completely homogeneous and slightly tacky, about 4 minutes. Continue as directed, or, for better texture, let mixture rest, covered, in the refrigerator for several hours or up to 1 day.
+              <br>4. Divide mixture into 12 even portions of about 3 ounces each. Roll into cylinders about 6 inches long and 3/4 inch wide and thread onto metal or bamboo skewers.
+              <br>5. Light one chimney full of charcoal. When all charcoal is lit and covered with gray ash, pour out and arrange coals on one side of charcoal grate. Set cooking grate in place, cover grill, and allow to preheat for 5 minutes. Alternatively, set half the burners on a gas grill to the highest heat setting, cover, and preheat for 10 minutes. Clean and oil grilling grate. Working in batches if necessary, place skewers over cooler side of grill, cover, and cook until they are nearly cooked through, about 5 minutes. (If you prefer, you can continue to let them cook through completely on cooler side, for more traditional, color-free results.) Open grill and transfer skewers to hot side. Continue to cook, turning frequently, until well browned on all sides, a few minutes longer.
+              <br>6. Transfer to a serving platter and serve immediately with shredded cabbage or Spicy Cabbage and Red Onion Slaw, cucumber, tomatoes, and lime wedges.
+              <br>
+          </div>
+        </div>
+        <div class="row">
+          <h1 id="comments-header">Comments:</h1>
+        </div>
+        <div id="comments">
+          <div id="comment-1" class="row justify-content-between my-2">
+            <div class="col-2">
+              <img id="profile-img-1" src="../assets/images/faces/alexander-krivitskiy-nz8jK82uF2o-unsplash.jpg" class="rounded img-fluid">
+            </div>
+            <div class="col-8 rounded bg-cstm-orange-lighter">
+              <p>Test</p>
+            </div>
+          </div>
+          <div id="comment-1" class="row justify-content-between my-2">
+            <div class="col-2">
+              <img id="profile-img-1" src="../assets/images/faces/alexandru-zdrobau--djRG1vB1pw-unsplash.jpg" class="rounded img-fluid">
+            </div>
+            <div class="col-8 rounded bg-cstm-orange-lighter">
+              <p>Test</p>
+            </div>
+          </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+      <div class="mt-3 p-4 bg-cstm-yellow-darker">
+        <div class="container">
+          <div id="copyright">
+            Copyright &copy; 2020
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
