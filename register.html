@@ -6,11 +6,8 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/common.js"></script>
-    <title>Login</title>
+    <title>Register</title>
     <script>
       $(document).ready(function() {
         $("#next").click(function() {
@@ -49,11 +46,11 @@
     </script>
   </head>
   <body>
-    <div id="login-interface">
-      <div id="login-area" class="bg-cstm-yellow">
-        <div class="login-nest bg-cstm-yellow-lighter">
-          <div class="login-nest bg-cstm-yellow-lightest">
-            <div class="container">
+    <div class="container-fluid vh-100 d-flex flex-column">
+      <div class="row bg-cstm-yellow flex-grow-1">
+        <div class="col-xs-12 col-md-6 p-4 bg-cstm-yellow-lighter d-flex flex-column">
+          <div class="p-4 bg-cstm-yellow-lightest flex-grow-1">
+            <div class="p-4">
               <p class="text-center mt-4"><a href="index.html" class="text-dark"><i id="login-logo" class="fa fa-cutlery"></i></a></p>
               <hr class="ml-auto mr-auto mt-4">
               <h1>Register</h1>
@@ -109,9 +106,13 @@
             </div>
           </div>
         </div>
-      </div>
-      <div id="login-filler" class="bg-cstm-orange-lightest">
+        <div id="register-filler" class="col-6 d-none d-md-block flex-grow-1">
+          &nbsp;
+        </div>
       </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
   </body>
 </html>
