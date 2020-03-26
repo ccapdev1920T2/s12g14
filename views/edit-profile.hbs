@@ -1,0 +1,74 @@
+<main role="main">
+  <div class="container">
+    <form>
+      <h2>Edit Profile</h2>
+      <div class="form-row">
+        <div class="col align-center">
+          <div class="form-group">
+            <label for="input-username">Username</label>
+            <input type="text" class="form-control" id="input-username" name="username">
+          </div>
+          <div class="form-group">
+            <label for="input-email">Email</label>
+            <input type="email" class="form-control" id="input-email" name="email">
+          </div>
+          <div class="form-group">
+            <label for="input-first-name">First name</label>
+            <input type="text" class="form-control" id="input-first-name" name="firstname">
+          </div>
+          <div class="form-group">
+            <label for="input-last-name">Last name</label>
+            <input type="text" class="form-control" id="input-last-name" name="lastname">
+          </div>
+          <div class="form-group">
+            <label for="input-bio">Biography</label>
+            <textarea cols="30" rows="10" class="form-control" id="input-bio" name="bio"></textarea>
+          </div>
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-cstm-green">Next Step</button>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <input type="file" id="img-upload" class="custom-file-input">
+            <label class="custom-file-label" for="img-upload">Choose your profile picture</label>
+            <img id="img-preview" class="img-thumbnail mt-2" style="display:none;width:75%;">
+          </div>
+        </div>
+      </div>
+    </form>
+  <!-- TODO: add aria-describedby descriptors using small for accessibility -->
+</main>
+
+{{!-- <script>
+  $(document).ready(function() {
+    var sessionID = getParameterByName('sid');
+    if (sessionID) {
+      var user = fromSession(sessionID);
+      $("#user-dp").attr("src", user.bio.display);
+      var anchors = $("a").toArray();
+      for (var key in anchors) {
+        var anchor = anchors[key];
+        var link = $(anchor).attr("href");
+        if ($(anchor).hasClass('logout')) continue;
+        if (link !== '#') {
+          $(anchor).attr("href", link + '?sid=' + sessionID);
+        }
+      }
+      $("#registered-nav").show();
+    } else {
+      window.location.href = "login.html";
+    }
+
+    $("#img-upload").change(function() {
+      if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(image) {
+          $("#img-preview").attr("src", image.target.result);
+          $("#img-preview").show();
+        };
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+  });
+</script> --}}

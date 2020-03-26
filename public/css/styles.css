@@ -24,7 +24,7 @@ a:hover, a:visited, a:link, a:active .no-hover {
 }
 
 #login-filler {
-  background-image: url(../images/lily-banse--YHSwy6uqvk-unsplash.jpg);
+  background-image: url(../img/lily-banse--YHSwy6uqvk-unsplash.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -34,7 +34,7 @@ a:hover, a:visited, a:link, a:active .no-hover {
 }
 
 #register-filler {
-  background-image: url(../images/brooke-lark-HlNcigvUi4Q-unsplash.jpg);
+  background-image: url(../img/brooke-lark-HlNcigvUi4Q-unsplash.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
