@@ -1,5 +1,5 @@
 const express = require('express');
-const handlebars = require('handlebars');
+const handlebars = require('handlebars'); // for handlebars.SafeString()
 const exphbs = require('express-handlebars');
 const path = require('path');
 
