@@ -1,0 +1,132 @@
+<script>
+  $(document).ready(function() {
+    $(".recipe-card").click(function() {
+      $(this).children("a")[0].click();
+    });
+  });
+</script>
+
+{{> navigation }}
+
+<main>
+  <div class="container">
+    <section id="popular" class="mt-3">
+      <h1>Popular</h1>
+      <div class="recipe-cards">
+        <div class="row mt-4">
+          <div class="card-deck">
+            <div class="recipe-card card text-center">
+              <a href="recipe/pancakes.html"></a>
+              <img class="card-img-top" src="assets/images/joseph-gonzalez-hTR1XPtTo_k-unsplash.jpg" alt="Pancakes (Photo by Joseph Gonzalez on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Pancakes</h6>
+              </div>
+            </div>
+            <div class="recipe-card card text-center">
+              <a href="recipe/coffee.html"></a>
+              <img class="card-img-top" src="assets/images/rinat-5kurAXuPPM0-unsplash.jpg" alt="Coffee (Photo by Rinat on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Coffee</h6>
+              </div>
+            </div>
+            <div class="recipe-card card text-center">
+              <a href="recipe/ramen.html"></a>
+              <img class="card-img-top" src="assets/images/michele-blackwell-rAyCBQTH7ws-unsplash.jpg" alt="Ramen (Photo by Michele Blackwell on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Ramen</h6>
+              </div>
+            </div>
+            <div class="recipe-card card text-center">
+              <a href="recipe/grilledbread.html"></a>
+              <img class="card-img-top" src="assets/images/shanice-garcia-up9-P5CyAjU-unsplash.jpg" alt="Grilled Bread (Photo by Shanice Garcia on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Grilled Bread</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="card-deck">
+            <div class="recipe-card card text-center">
+              <a href="recipe/steak.html"></a>
+              <img class="card-img-top" src="assets/images/keri-liwi-c3mFafsFz2w-unsplash.jpg" alt="Steak (Photo by Keri Liwi on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Steak</h6>
+              </div>
+            </div>
+            <div class="recipe-card card text-center">
+              <a href="recipe/whitepasta.html"></a>
+              <img class="card-img-top" src="assets/images/nerfee-mirandilla-huE4NUt2gq8-unsplash.jpg" alt="White Pasta (Photo by Nerfee Mirandilla on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">White Pasta</h6>
+              </div>
+            </div>
+            <div class="recipe-card card text-center">
+              <a href="recipe/roundbread.html"></a>
+              <img class="card-img-top" src="assets/images/stephen-walker-_-SwhhV7tSo-unsplash.jpg" alt="Round Bread (Photo by Stephen Walker on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Round Bread</h6>
+              </div>
+            </div>
+            <div class="recipe-card card text-center">
+              <a href="recipe/clamandvegetablesoup.html"></a>
+              <img class="card-img-top" src="assets/images/do-mee-SH8_JmrsQcw-unsplash.jpg" alt="Clam and Vegetable Soup (Photo by Do mee on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Clam and Vegetable Soup</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-cstm-orange-darkest text-light ml-auto mr-auto mt-4 d-block">Show more</button>
+    </section>
+    <section id="user-featured" class="mt-3">
+      <h1>For you</h1>
+      <div class="recipe-cards">
+        <div class="row mt-4">
+          <div class="card-deck">
+            <div class="recipe-card card text-center">
+              <a href="recipe/hashbrown.html"></a>
+              <img class="card-img-top" src="assets/images/luke-johnson-a4vZKIwoCUE-unsplash.jpg" alt="Hash Brown (Photo by Luke Johnson on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Hash Brown</h6>
+              </div>
+            </div>
+            <div class="recipe-card card text-center">
+              <a href="recipe/pepperonipizza.html"></a>
+              <img class="card-img-top" src="assets/images/amirali-mirhashemian--afBm8bQWDI-unsplash.jpg" alt="Pepperoni Pizza (Photo by Amirali Mirhashemian on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Pepperoni Pizza</h6>
+              </div>
+            </div>
+            <div class="recipe-card card text-center">
+              <a href="recipe/pie.html"></a>
+              <img class="card-img-top" src="assets/images/sunny-ahuja-9-AEnqGf94E-unsplash.jpg" alt="Pie (Photo by Sunny Ahuja on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Pie</h6>
+              </div>
+            </div>
+            <div class="recipe-card card text-center">
+              <a href="recipe/crabsoup.html"></a>
+              <img class="card-img-top" src="assets/images/roni-herdyanzah-vrX8M4Plu8U-unsplash.jpg" alt="Crab Soup (Photo by Roni Herdyanzah on Unsplash)">
+              <div class="card-body bg-cstm-green-lighter">
+                <h6 class="card-title">Crab Soup</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-cstm-orange-darkest text-light ml-auto mr-auto mt-4 d-block">Show more</button>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="mt-3 p-4 bg-cstm-yellow-darker">
+    <div class="container">
+      <div id="copyright">
+        Copyright &copy; 2020
+      </div>
+    </div>
+  </div>
+</footer>
