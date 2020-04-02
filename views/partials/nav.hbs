@@ -1,53 +1,53 @@
-<nav class="navbar fixed-top navbar-light text-nowrap bg-cstm-yellow">
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-cstm-yellow">
   <div class="container">
     <a class="navbar-brand text-cstm-orange-darkest" href="index"><i class="fa fa-cutlery"></i>&nbsp;&nbsp;&nbsp;Cooker</a>
-    <ul class="navbar-nav ml-auto mr-auto">
-      <li class="nav-item">
-        <div class="justify-content-md-center">
-          <form>
-            <div class="input-group mr-sm-2">
-              <input type="text" name="q" class="form-control border-0" placeholder="Search recipes" style="width: 480px">
-              <div class="input-group-append">
-                <button class="btn btn-cstm-orange" type="button">
-                  <i class="fa fa-search text-cstm-orange-darkest"></i>
-                </button>
-              </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav my-1 ml-auto mr-auto">
+        <li class="nav-item">
+          <div class="justify-content-md-center">
+            <form class="form-inline">
+              <input type="text" name="q" class="form-control border-0 rounded-left" placeholder="Search recipes" style="width: 480px">
+              <span class="input-group-append">
+                <button class="btn btn-cstm-orange rounded-right" type="submit"><i class="fa fa-search text-cstm-orange-darkest"></i></button>
+              </span>
+            </form>
+          </div>
+        </li>
+      </ul>
+      <ul class="navbar-nav my-1 mr-0">
+        {{#if registered}}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle pb-1 pt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="fa fa-user fa-fw" aria-hidden="true"></span>
+              <span class="d-lg-none d-xl-inline">Test</span>
+            </a>
+            <div class="dropdown-menu bg-cstm-yellow-lightest" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">View profile</a>
+              <a class="dropdown-item" href="/edit-profile">Edit profile</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">View your recipes</a>
+              <a class="dropdown-item" href="/create-recipe">Create recipe</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/login">Log out</a>
             </div>
-          </form>
-        </div>
-      </li>
-    </ul>
-    {{!-- <div class="collapse navbar-collapse" id="navbarNav"> --}}
-      <ul class="navbar-nav mr-0">
-      {{#if registered}}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle pb-1 pt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="fa fa-user fa-fw" aria-hidden="true"></span>
-            <span class="d-lg-none d-xl-inline">Test</span>
-          </a>
-          <div class="dropdown-menu bg-cstm-yellow-lightest" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">View profile</a>
-            <a class="dropdown-item" href="/edit-profile">Edit profile</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">View your recipes</a>
-            <a class="dropdown-item" href="/create-recipe">Create recipe</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/login">Log out</a>
-          </div>
-        </li>
-      {{else}}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle pb-1 pt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="fa fa-user-times fa-fw" aria-hidden="true"></span>
-            <span class="d-lg-none d-xl-inline">Guest</span>
-          </a>
-          <div class="dropdown-menu bg-cstm-yellow-lightest" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/login">Log in</a>
-            <a class="dropdown-item" href="/register">Register</a>
-          </div>
-        </li>
-      {{/if}}
+          </li>
+        {{else}}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle pb-1 pt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="fa fa-user-times fa-fw" aria-hidden="true"></span>
+              <span class="d-lg-none d-xl-inline">Guest</span>
+            </a>
+            <div class="dropdown-menu bg-cstm-yellow-lightest" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="/login">Log in</a>
+              <a class="dropdown-item" href="/register">Register</a>
+            </div>
+          </li>
+        {{/if}}
       </ul>
     </div>
-  {{!-- </div> --}}
+  </div>
 </nav>
