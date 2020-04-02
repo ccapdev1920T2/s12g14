@@ -17,21 +17,11 @@
         </div>
       </li>
     </ul>
-    <div id="unregistered-nav" style="display:none;">
-      <ul class="navbar-nav mr-0">
-        <li class="nav-item">
-          <a class="nav-link" href="login">Log in</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="register">Register</a>
-        </li>
-      </ul>
-    </div>
-    <div id="registered-nav" style="display:none;">
+    {{#if registered}}
       <ul class="navbar-nav mr-0">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle pb-1 pt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img id="user-dp" src="" width="30" height="30" class="d-inline-block align-top rounded-circle" alt="">
+            <img id="user-dp" src="img/Faces/conor-obrien-nKZuhvCGGQU-unsplash.jpg" width="30" height="30" class="d-inline-block align-top rounded-circle" alt="">
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item logout" href="login">Log out</a>
@@ -40,6 +30,15 @@
           </div>
         </li>
       </ul>
-    </div>
+    {{else}}
+      <ul class="navbar-nav mr-0">
+        <li class="nav-item">
+          <a class="nav-link" href="login">Log in</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="register">Register</a>
+        </li>
+      </ul>
+    {{/if}}
   </div>
 </nav>

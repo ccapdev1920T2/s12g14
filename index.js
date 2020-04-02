@@ -19,6 +19,7 @@ app.set('view engine', 'hbs');
 app.get('/', function(req, res){
   res.render('index', {
     layout: 'with-nav',
+    registered: false,
     class: 'bg-cstm-yellow-lightest',
     title: 'Landing Page',
   })
@@ -38,6 +39,7 @@ app.get('/register', function(req, res){
 app.get('/profile', function(req, res){
   res.render('profile', {
     layout: 'with-nav',
+    registered: false,
     class: 'bg-cstm-yellow-lightest',
     title: 'View Profile',
   });
@@ -45,6 +47,7 @@ app.get('/profile', function(req, res){
 app.get('/create-recipe', function(req, res){
   res.render('create-recipe', {
     layout: 'with-nav',
+    registered: true,
     class: 'bg-cstm-yellow-lightest',
     title: 'Create Recipe',
   });
@@ -53,6 +56,7 @@ app.get('/create-recipe', function(req, res){
 app.get('/edit-profile', function(req, res){
   res.render('edit-profile', {
     layout: 'with-nav',
+    registered: true,
     class: 'bg-cstm-yellow-lightest',
     title: 'Edit Profile'
   });
@@ -61,6 +65,7 @@ app.get('/edit-profile', function(req, res){
 app.get('/recipe', function(req, res){
   res.render('recipe', {
     layout: 'with-nav',
+    registered: false,
     class: 'bg-cstm-yellow-lightest',
     title: 'View Recipe',
   });
