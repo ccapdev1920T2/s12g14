@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-cstm-yellow">
+<nav class="navbar fixed-top navbar-light text-nowrap bg-cstm-yellow">
   <div class="container">
     <a class="navbar-brand text-cstm-orange-darkest" href="index"><i class="fa fa-cutlery"></i>&nbsp;&nbsp;&nbsp;Cooker</a>
     <ul class="navbar-nav ml-auto mr-auto">
@@ -17,28 +17,37 @@
         </div>
       </li>
     </ul>
-    {{#if registered}}
+    {{!-- <div class="collapse navbar-collapse" id="navbarNav"> --}}
       <ul class="navbar-nav mr-0">
+      {{#if registered}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle pb-1 pt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img id="user-dp" src="img/Faces/conor-obrien-nKZuhvCGGQU-unsplash.jpg" width="30" height="30" class="d-inline-block align-top rounded-circle" alt="">
+            <span class="fa fa-user fa-fw" aria-hidden="true"></span>
+            <span class="d-lg-none d-xl-inline">Test</span>
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item logout" href="login">Log out</a>
-            <a class="dropdown-item" href="edit-profile">Edit profile</a>
-            <a class="dropdown-item" href="create-recipe">Create recipe</a>
+          <div class="dropdown-menu bg-cstm-yellow-lightest" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">View profile</a>
+            <a class="dropdown-item" href="/edit-profile">Edit profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">View your recipes</a>
+            <a class="dropdown-item" href="/create-recipe">Create recipe</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/login">Log out</a>
           </div>
         </li>
-      </ul>
-    {{else}}
-      <ul class="navbar-nav mr-0">
-        <li class="nav-item">
-          <a class="nav-link" href="login">Log in</a>
+      {{else}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle pb-1 pt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="fa fa-user-times fa-fw" aria-hidden="true"></span>
+            <span class="d-lg-none d-xl-inline">Guest</span>
+          </a>
+          <div class="dropdown-menu bg-cstm-yellow-lightest" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/login">Log in</a>
+            <a class="dropdown-item" href="/register">Register</a>
+          </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="register">Register</a>
-        </li>
+      {{/if}}
       </ul>
-    {{/if}}
-  </div>
+    </div>
+  {{!-- </div> --}}
 </nav>
