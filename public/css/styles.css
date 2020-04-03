@@ -1,0 +1,48 @@
+body {
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+nav + main > .container {
+  padding-top: 65px;
+}
+
+a:hover, a:visited, a:link, a:active .no-hover {
+  text-decoration: none !important;
+}
+
+.recipe-card {
+  cursor: pointer;
+}
+
+.recipe-card a {
+  display: none;
+}
+
+#profile-img {
+  width: 32px;
+  height: 32px;
+}
+
+#login-filler {
+  background-image: url(../img/lily-banse--YHSwy6uqvk-unsplash.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.55;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}
+
+#register-filler {
+  background-image: url(../img/brooke-lark-HlNcigvUi4Q-unsplash.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.55;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}
+
+#login-logo {
+  font-size: 3em;
+}
