@@ -1,68 +1,59 @@
 <main role="main">
-  <div class="container">
+  <div class="container mt-3">
     <form action="index.html" method="POST">
       <h2>Create Recipe</h2>
       <div id="recipe-main">
-        <div class="form-row">
-          <div class="col align-center">
-            <div class="form-group">
-              <label for="input-recipe-name">Input Recipe Name</label>
-              <input type="text" class="form-control" id="input-recipe-name">
-            </div>
-            <div class="form-group">
-              <label for="input-servings">Servings</label>
-              <input type="number" min="1" class="form-control" id="input-servings">
-            </div>
-            <div class="form-group">
-              <label for="input-cuisine">Main Cuisine Type</label>
-              <select class="form-control" id="input-cuisine">
-                <option>American</option>
-                <option>English</option>
-                <option>Italian</option>
-                <option>Japanese</option>
-                <option>Spanish</option>
-                <option>Thai</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-group">
-              <label for="input-description">Description</label>
-              <textarea class="form-control" id="input-description" cols="30" rows="10"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="input-tags">Tags</label>
-              <textarea class="form-control" id="input-tags" cols="30" rows="10" aria-describedby="tags-help"></textarea>
-              <small id="tags-help" class="text-muted">Each tag should be separated by a space.</small>
-            </div>
-          </div>
+        <div class="form-group">
+          <label for="input-recipe-name">Input Recipe Name</label>
+          <input type="text" class="form-control" id="input-recipe-name">
+        </div>
+        <div class="form-group">
+          <label for="input-servings">Servings</label>
+          <input type="number" min="1" class="form-control" id="input-servings">
+        </div>
+        <div class="form-group">
+          <label for="input-cuisine">Main Cuisine Type</label>
+          <select class="form-control" id="input-cuisine">
+            <option>American</option>
+            <option>English</option>
+            <option>Italian</option>
+            <option>Japanese</option>
+            <option>Spanish</option>
+            <option>Thai</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="input-description">Description</label>
+          <textarea class="form-control" id="input-description" cols="30" rows="10" placeholder="Optional."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="input-tags">Tags</label>
+          <textarea class="form-control" id="input-tags" cols="30" rows="10" aria-describedby="tags-help" placeholder="Optional."></textarea>
+          <small id="tags-help" class="text-muted">Each tag should be separated by a space.</small>
         </div>
         <div class="mt-3 form-row justify-content-md-center">
           <button type="button" id="recipe-next" class="btn bg-cstm-green">Next</button>
         </div>
       </div>
       <div id="recipe-details" style="display:none;">
-        <div class="form-row">
+        <div class="form-row mt-4">
           <div class="col">
-            <strong>Ingredients</strong>
+            <h5>Ingredients</h5>
             <div id="recipe-ingredients">
             </div>
             <div class="form-group row">
-              <div class="col-sm"></div>
-              <div class="col-sm-11 text-center">
-                <button type="button" id="recipe-ingredients-add" class="btn bg-cstm-green rounded-circle">+</button>
+              <div class="col-12 text-center">
+                <button type="button" id="recipe-ingredients-add" class="btn bg-cstm-green rounded-circle"><span class="fa fa-plus"></span></button>
               </div>
             </div>
-          </div>
-          <div class="col">
-            <strong>Steps</strong>
+            <hr class="mb-4">
+            <h5>Steps</h5>
             <div id="recipe-steps">
             </div>
             <div class="form-group row">
-              <div class="col-sm"></div>
-              <div class="col-sm-11 text-center">
-                <button type="button" id="recipe-steps-add" class="btn bg-cstm-green rounded-circle">+</button>
+              <div class="col-12 text-center">
+                <button type="button" id="recipe-steps-add" class="btn bg-cstm-green rounded-circle"><span class="fa fa-plus"></span></button>
               </div>
             </div>
           </div>
