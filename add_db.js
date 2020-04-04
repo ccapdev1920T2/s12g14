@@ -8,6 +8,7 @@ db.createDatabase();
     containing first name, last name, username, and bio of a user
 */
 var user = {
+  _id:"user1",
   username: "CookingBabe",
   lastname: "Ylagan",
   firstname: "Abby",
@@ -23,6 +24,7 @@ var user = {
 db.insertOne(collection, user);
 
 var user = {
+  _id:"user1",
   username: "AlmaAlyf",
   lastname: "Labrador",
   firstname: "Brigidia Alma",
@@ -38,6 +40,7 @@ var user = {
 db.insertOne(collection, user);
 
 var user = {
+  _id:"user1",
   username: "PogiFood",
   lastname: "Bello",
   firstname: "Dante",
@@ -53,6 +56,7 @@ var user = {
 db.insertOne(collection, user);
 
 var user = {
+  _id:"user1",
   username: "LoloRaffy",
   lastname: "Olarte",
   firstname: "Rafe Quentin",
@@ -68,6 +72,7 @@ var user = {
 db.insertOne(collection, user);
 
 var user = {
+  _id:"user1",
   username: "TambayngDubai",
   lastname: "Gonzaga",
   firstname: "Gitana",
@@ -78,6 +83,22 @@ var user = {
   picture_link: "profile5pic",
   is_admin: false,
   ban_until: null
+};
+
+db.insertOne(collection, user);
+
+const collection = 'recipes';
+
+var user = {
+  _id:"recipe1",
+  name: "Mojos",
+  picture_link: "Mojos.jpeg",
+  author: "user1",
+  description: "",
+  ingredients: "abby-ylagan@yopmail.com",
+  steps: "Leaving a bit of sparkle everywhere I go ✨",
+  keywords: "12345",
+  time_upload: "profile1pic",
 };
 
 db.insertOne(collection, user);
