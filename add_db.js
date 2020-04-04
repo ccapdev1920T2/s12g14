@@ -1,4 +1,4 @@
-const db = require('./database/db.js');
+const db = require('./database/db2.js');
 const collection = 'profiles';
 
 db.createDatabase();
