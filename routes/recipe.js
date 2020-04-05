@@ -4,7 +4,15 @@ const express = require('express');
 const router = express.Router();
 
 const multer = require('multer');
-const upload = multer({ dest: 'uploads' });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+const upload = multer(storage);
 
 const Profile = require('../models/profile-model');
 const Recipe = require('../models/recipe-model');
@@ -38,28 +46,31 @@ router.post('/new', upload.single('display'), function(req, res, next) {
     var ingredients = [];
     var index = 1;
     while (true) {
-      var name = 'ingredient-' + index;
-      if (req.body[name]) {
-        ingredients.push(req.body[name]);
+      var fname = 'ingredient-' + index;
+      if (req.body[fname]) {
+        ingredients.push(req.body[fname]);
       } else {
         break;
       }
+      index++;
     }
 
     var steps = [];
     index = 1;
     while (true) {
-      var name = 'step-' + index;
-      if (req.body[name]) {
-        steps.push(req.body[name]);
+      var fname = 'step-' + index;
+      if (req.body[fname]) {
+        steps.push(req.body[fname]);
       } else {
         break;
       }
+      index++;
     }
 
     Recipe.create({
       name: name,
       description: description,
+      author: req.session.userId,
       servings: servings,
       picture_link: '/uploads/' + display.filename,
       keywords: keywords.split(' '),
@@ -139,7 +150,7 @@ router.post('/:id/delete', function(req, res, next) {
   }
 });
 
-router.post('/:id/like', function(req, res, next) {
+router.get('/:id/like', function(req, res, next) {
   if (req.session && req.session.loggedIn) {
     Like.create({ recipe: req.params.id, sender: req.session.userId }, function(err) {
       if (err)  return next(err);
@@ -150,7 +161,7 @@ router.post('/:id/like', function(req, res, next) {
   }
 });
 
-router.post('/:id/unlike', function(req, res, next) {
+router.get('/:id/unlike', function(req, res, next) {
   if (req.session && req.session.loggedIn) {
     Like.deleteOne({ recipe: req.params.id, sender: req.session.userId }, function(err) {
       if (err)  return next(err);
@@ -253,15 +264,6 @@ router.get('/:id', function(req, res, next) {
         res.render('view-recipe', params);
       });
     });
-  });
-});
-
-router.get('/', function(req, res) {
-  res.render('view-recipe', {
-    layout: 'with-nav',
-    registered: false,
-    class: 'bg-cstm-yellow-lightest',
-    title: 'View Recipe',
   });
 });
 

@@ -196,20 +196,13 @@ module.exports.initializeDummy = function() {
         "Nope, pass"
       ];
 
-      var offensiveComments = [
-        "F***ing piece of s**t! You f***er!",
-        "What is this piece of s**t?",
-        "F*** YOU!"
-      ];
-
       var commentTemplates = [
         positiveComments,
         neutralComments,
-        negativeComments,
-        offensiveComments
+        negativeComments
       ];
 
-      var breakpoints = [ 0.85, 0.95, 0.99, 999.0 ];
+      var breakpoints = [ 0.85, 0.95, 999.0 ];
       
       var randomComment = function() {
         var value = Math.random();
