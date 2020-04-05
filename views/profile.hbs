@@ -15,12 +15,10 @@
     <div class="row">
       <h2>{{recipe_title}}</h2>
       {{> recipes uploaded_recipes }}
-      <button type="button" class="btn btn-cstm-orange-darkest text-light ml-auto mr-auto mt-4 d-block">Show more</button>
     </div>
     <div class="row">
       <h2>Likes</h2>
       {{> recipes liked_recipes }}
-      <button type="button" class="btn btn-cstm-orange-darkest text-light ml-auto mr-auto mt-4 d-block">Show more</button>
     </div>
     <div class="row">
       <h2 class="mt-2">Comments</h2>
@@ -48,25 +46,3 @@
   </div>
   <!-- TODO: add aria-describedby descriptors using small for accessibility -->
 </main>
-
-{{!-- <script>
-  $(document).ready(function() {
-    var sessionID = getParameterByName('sid');
-    if (sessionID) {
-      var user = fromSession(sessionID);
-      $("#user-dp").attr("src", '../' + user.bio.display);
-      var anchors = $("a").toArray();
-      for (var key in anchors) {
-        var anchor = anchors[key];
-        var link = $(anchor).attr("href");
-        if ($(anchor).hasClass('logout')) continue;
-        if (link !== '#') {
-          $(anchor).attr("href", link + '?sid=' + sessionID);
-        }
-      }
-      $("#registered-nav").show();
-    } else {
-      $("#unregistered-nav").show();
-    }
-  });
-</script> --}}

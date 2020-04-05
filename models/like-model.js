@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var LikeSchema = new mongoose.Schema({
-  _id: Schema.Types.ObjectId,
   sender: {
     type: Schema.Types.ObjectId,
     ref: 'User',

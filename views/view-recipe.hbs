@@ -4,7 +4,7 @@
       <div class="col col-sm-7 bg-cstm-green-lightest">
         <h1><strong>{{recipe.name}}</strong></h1>
         <div id="profile-area">
-          <a href="#" class="no-hover">
+          <a href="/profile/{{author.username}}" class="no-hover">
             <img id="profile-img" class="rounded-circle" src="{{author.picture_link}}">
             <span id="profile-name" class="ml-1 text-dark">{{author.display_name}}</span>
           </a>
@@ -14,7 +14,7 @@
           <h4 id="servings-number"><em>{{recipe.servings}}</em></h4>
         </div>
         <div id="recipe-interactions" class="my-3">
-          <h5 class="float-left">0 likes</h5>
+          <h5 class="float-left">{{like_count}} like(s)</h5>
           <h5 class="float-right">
             <span id="registered-like" style="display:none;"><a href="#" class="text-dark">Like this recipe!</a></span>
             <span id="unregistered-like" style="display:none;">Register to like recipes!</span>
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="col col-sm-4 bg-cstm-orange">
-        <img src="/img/michele-blackwell-rAyCBQTH7ws-unsplash.jpg" class="rounded img-fluid">
+        <img src="{{recipe.picture_link}}" class="rounded img-fluid">
       </div>
     </div>
     <div class="row bg-cstm-green-lightest rounded my-3 p-2">
@@ -54,41 +54,23 @@
     <div class="row">
       <h1 id="comments-header">Comments:</h1>
       <div id="comments">
-        <div id="comment-1" class="row bg-cstm-orange-lighter my-2 p-2">
+        {{#each comments}}
+        <div class="row bg-cstm-orange-lighter my-2 p-2">
           <div class="col-2">
-            <a href="../profile/profile3.html">Profile</a>
-            <a href="../profile/profile3.html">
-              <img id="profile-img-1" src="/img/faces/conor-obrien-nKZuhvCGGQU-unsplash.jpg" class="rounded img-fluid">
+            <a href="/profile/{{author.username}}">{{author.display_name}}</a>
+            <a href="/profile/{{author.username}}">
+              <img id="profile-img-1" src="{{author.picture_link}}" class="rounded img-fluid">
             </a>
           </div>
           <div class="col-10">
-            <span class="float-right">Example time/date</span>
+            <span class="float-right">{{timestamp}}</span>
             <div class="mb-3 mt-4" style="min-height: 100px;">
-              Short comment.
+              {{text}}
             </div>
             <button type="button" class="btn float-right border-0 bg-cstm-orange"><span style="font-size: 12px;" class="fa fa-minus"></span> Report Comment</button>
           </div>
         </div>
-        <div id="comment-2" class="row bg-cstm-orange-lighter my-2 p-2">
-          <div class="col-2">
-            <a href="../profile/profile2.html">Profile</a>
-            <a href="../profile/profile2.html">
-              <img id="profile-img-1" src="/img/faces/igor-rand-Af9YhuGE7Qs-unsplash.jpg" class="rounded img-fluid">
-            </a>
-          </div>
-          <div class="col-10">
-            <span class="float-right">Example time/date</span>
-            <div class="mb-3 mt-4" style="min-height: 100px;">
-              Very very long comment. Almost too long. Can't imagine a comment being this long. Very very long comment. Almost too long. Can't imagine a comment being this long. 
-              Very very long comment. Almost too long. Can't imagine a comment being this long. Very very long comment. Almost too long. Can't imagine a comment being this long. 
-              Very very long comment. Almost too long. Can't imagine a comment being this long. Very very long comment. Almost too long. Can't imagine a comment being this long. 
-              Very very long comment. Almost too long. Can't imagine a comment being this long. Very very long comment. Almost too long. Can't imagine a comment being this long. 
-              Very very long comment. Almost too long. Can't imagine a comment being this long. Very very long comment. Almost too long. Can't imagine a comment being this long. 
-              Very very long comment. Almost too long. Can't imagine a comment being this long. Very very long comment. Almost too long. Can't imagine a comment being this long. 
-            </div>
-            <button type="button" class="btn float-right border-0 bg-cstm-orange"><span style="font-size: 12px;" class="fa fa-minus"></span> Report Comment</button>
-          </div>
-        </div>
+        {{/each}}
       </div>
     </div>
 </main>
