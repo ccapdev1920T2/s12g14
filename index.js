@@ -24,6 +24,16 @@ app.get('/', function(req, res){
     title: 'Landing Page',
   })
 });
+
+app.get('/search', function(req, res){
+  res.render('search', {
+    layout: 'with-nav',
+    registered: false,
+    class: 'bg-cstm-yellow-lightest',
+    title: 'Search Results',
+  })
+});
+
 app.get('/login', function(req, res){
   res.render('login', {
     title: 'Login',
