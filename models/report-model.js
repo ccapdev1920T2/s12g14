@@ -11,9 +11,10 @@ var ReportSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
-  ref: {
+  reported_ref: {
     // Ref for reported ID, either User/Comment
     type: String,
+    enum: ['User', 'Comment'],
     required: true
   },
   category: {
