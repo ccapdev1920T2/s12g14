@@ -17,9 +17,9 @@
           <h5 class="float-left">{{like_count}} like(s)</h5>
           {{#if registered}}
             {{#if liked}}
-            <span id="registered-liked"><a href="/recipe/{{recipe._id}}/unlike" class="text-dark">Unlike this recipe</a></span>
+            <span id="registered-liked"><a href="/recipe/{{recipeId}}/unlike" class="text-dark">Unlike this recipe</a></span>
             {{else}}
-            <span id="registered-like"><a href="/recipe/{{recipe._id}}/like" class="text-dark">Like this recipe!</a></span>
+            <span id="registered-like"><a href="/recipe/{{recipeId}}/like" class="text-dark">Like this recipe!</a></span>
             {{/if}}
           {{else}}
           <span id="unregistered-like">Register to like recipes!</span>
@@ -72,14 +72,25 @@
             <div class="mb-3 mt-4" style="min-height: 100px;">
               {{text}}
             </div>
-            {{#if registered}}
+            {{!-- {{#if registered}}
             <button type="button" class="btn float-right border-0 bg-cstm-orange"><span style="font-size: 12px;" class="fa fa-minus"></span> Report Comment</button>
+            {{/if}}--}}
+            {{#if owned}}
+            <form action="/recipe/{{../recipeId}}/comment/edit" method="POST">
+              <input type="text" class="d-none" name="id" value="{{_id}}">
+              <textarea name="text"></textarea>
+              <button type="submit">Edit</button>
+            </form>
+            <form action="/recipe/{{../recipeId}}/comment/delete" method="POST">
+              <input type="text" class="d-none" name="id" value="{{_id}}">
+              <button type="submit">Delete</button>
+            </form>
             {{/if}}
           </div>
         </div>
         {{/each}}
         {{#if registered}}
-        <form action="/recipe/{{recipe._id}}/comment" method="POST">
+        <form action="/recipe/{{recipeId}}/comment" method="POST">
           <textarea name="text"></textarea>
           <button type="submit">Submit</button>
         </form>

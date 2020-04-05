@@ -226,6 +226,7 @@ router.get('/:id', function(req, res, next) {
       class: 'bg-cstm-yellow-lightest',
       title: recipe.name,
       recipe: recipe.toObject(),
+      recipeId: req.params.id,
       author: recipe.author.toObject()
     };
 
@@ -251,6 +252,7 @@ router.get('/:id', function(req, res, next) {
           }
         }
       }
+      params.liked = liked;
 
       Comment.find({ recipe: req.params.id }).populate('author').exec(function(err, comments) {
         if (err) return next(err);
@@ -258,6 +260,7 @@ router.get('/:id', function(req, res, next) {
         params.comments = comments.map(d => {
           var o = d.toObject();
           o.author.display_name = d.author.display_name;
+          o.owned = d.author._id == req.session.userId;
           return o;
         });
 
