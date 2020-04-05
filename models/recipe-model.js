@@ -1,11 +1,6 @@
-var mongoose=require('mongoose');
+var mongoose = require('mongoose');
 
 var RecipeSchema = new mongoose.Schema({
-  ID: {
-    type: String,
-    required: true,
-    unique:true
-  },
   name: {
     type: String,
     required: true,
@@ -15,11 +10,12 @@ var RecipeSchema = new mongoose.Schema({
     required: true
   },
   author: {
-    type: UserSchema,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
   description: {
-    type: [String],
+    type: String,
     required: true
   },
   ingredients: {
@@ -36,8 +32,9 @@ var RecipeSchema = new mongoose.Schema({
   },
   time_upload: {
     type: Date,
+    default: Date.now,
     required: true
   }
 })
 
-module.exports = mongoose.model('Recipe',RecipeSchema);
+module.exports = mongoose.model('Recipe', RecipeSchema);

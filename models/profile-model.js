@@ -1,9 +1,10 @@
-var mongoose=require('mongoose');
+var mongoose = require('mongoose');
 
-var ProfileSchema = new mongoose.Schema({
+var UserSchema = new mongoose.Schema({
   username: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
+    unique: true
   },
   lastname: {
     type: String,
@@ -15,6 +16,7 @@ var ProfileSchema = new mongoose.Schema({
   },
   join_date: {
     type: Date,
+    default: Date.now,
     required: true
   },
   email: {
@@ -38,10 +40,10 @@ var ProfileSchema = new mongoose.Schema({
     required: true
   },
   ban_until: {
-    type: String,
+    type: Date,
     required: false
   }
 
 })
 
-module.exports = mongoose.model('Profile',ProfileSchema);
+module.exports = mongoose.model('User', UserSchema);

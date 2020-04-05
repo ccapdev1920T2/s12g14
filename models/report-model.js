@@ -1,13 +1,9 @@
-var mongoose=require('mongoose');
+var mongoose = require('mongoose');
 
 var ReportSchema = new mongoose.Schema({
-  ID: {
-    type: String,
-    required: true,
-    unique:true
-  },
   author: {
-    type: ProfileSchema,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
   reported_ID: {
@@ -16,7 +12,7 @@ var ReportSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum:['sexual','gore','others'],
+    enum: ['sexual','gore','others'],
     required: true
   },
   reason: {
@@ -31,4 +27,4 @@ var ReportSchema = new mongoose.Schema({
   
 })
 
-module.exports = mongoose.model('Report',ReportSchema)
+module.exports = mongoose.model('Report', ReportSchema)
