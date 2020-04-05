@@ -12,11 +12,11 @@ var ReportSchema = new mongoose.Schema({
     required: true
   },
   ref: {
-    // 
+    // Ref for reported ID, either User/Comment
     type: String,
     required: true
-  }
-  type: {
+  },
+  category: {
     type: String,
     enum: ['sexual','gore','others'],
     required: true
