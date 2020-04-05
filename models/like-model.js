@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var LikeSchema = new mongoose.Schema({
+  _id: Schema.Types.ObjectId,
   sender: {
     type: Schema.Types.ObjectId,
     ref: 'User',

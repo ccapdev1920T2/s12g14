@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
+  _id: Schema.Types.ObjectId,
   username: {
     type: String,
     required: true,

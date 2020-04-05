@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var RecipeSchema = new mongoose.Schema({
+  _id: Schema.Types.ObjectId,
   name: {
     type: String,
     required: true,
@@ -20,11 +21,11 @@ var RecipeSchema = new mongoose.Schema({
   },
   ingredients: {
     type: [String],
-    required: true
+    required: true,
   },
   steps: {
     type: [String],
-    required: true
+    required: true,
   },
   keywords: {
     type: [String],

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var ReportSchema = new mongoose.Schema({
+  _id: Schema.Types.ObjectId,
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',
