@@ -61,11 +61,34 @@
     <div class="row">
       <h1 id="comments-header">Comments:</h1>
       <div id="comments">
+        {{!-- {{#each comment}}
+          <div class="row bg-cstm-orange-lighter my-2 p-2" id="{{id}}">
+            <div class="col-2">
+              <div>
+                <a href="../{{id}}">{{name}}</a>
+              </div>
+              <a href="../{{id}}">
+                <img class="rounded img-fluid" id="profile-img-{{id}}" src="img/users/{{profile-img-link}}" width="100" length="100">
+              </a>
+            </div>
+            <div class="col-10">
+              <span class="float-right">{{date-time}}</span>
+              <div class="mb-3 mt-4" style="min-height: 100px;">
+                {{content}}
+              </div>
+            </div>
+            <button type="button" class="btn float-right border-0 bg-cstm-orange">
+              <span style="font-style: 12px;" class="fa fa-minus">Report Comment</span>
+            </button>
+          </div>
+        {{/each}} --}}
         <div id="comment-1" class="row bg-cstm-orange-lighter my-2 p-2">
           <div class="col-2">
-            <a href="../profile/profile3.html">Profile</a>
+            <div>
+              <a href="../profile/profile3.html">Profile</a>
+            </div>
             <a href="../profile/profile3.html">
-              <img id="profile-img-1" src="/img/faces/conor-obrien-nKZuhvCGGQU-unsplash.jpg" class="rounded img-fluid">
+              <img id="profile-img-1" src="/img/faces/conor-obrien-nKZuhvCGGQU-unsplash.jpg" class="rounded img-fluid" width="100" length="100">
             </a>
           </div>
           <div class="col-10">
@@ -78,9 +101,11 @@
         </div>
         <div id="comment-2" class="row bg-cstm-orange-lighter my-2 p-2">
           <div class="col-2">
-            <a href="../profile/profile2.html">Profile</a>
+            <div>
+              <a href="../profile/profile2.html">Profile</a>
+            </div>
             <a href="../profile/profile2.html">
-              <img id="profile-img-1" src="/img/faces/igor-rand-Af9YhuGE7Qs-unsplash.jpg" class="rounded img-fluid">
+              <img id="profile-img-1" src="/img/faces/igor-rand-Af9YhuGE7Qs-unsplash.jpg" class="rounded img-fluid" width="100" length="100">
             </a>
           </div>
           <div class="col-10">
