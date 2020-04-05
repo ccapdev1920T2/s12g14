@@ -1,6 +1,5 @@
 const mongodb = require('mongodb');
 const mongoose = require('mongoose');
-const client = mongodb.MongoClient;
 const Profile = require('./profile-model.js');
 const Comment = require('./comment-model.js');
 const Like = require('./like-model.js');
