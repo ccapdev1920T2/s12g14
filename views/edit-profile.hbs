@@ -4,13 +4,21 @@
       <h2>Edit Profile</h2>
       <div class="form-row">
         <div class="form-group col-lg-6 col-md-12">
+          <label for="input-firstname">First Name</label>
+          <input type="text" class="form-control" id="input-firstname">
+        </div>
+        <div class="form-group col-lg-6 col-md-12">
+          <label for="input-lastname">Last Name</label>
+          <input type="text" class="form-control" id="input-lastname">
+        </div>
+        <div class="form-group col-lg-6 col-md-12">
           <label for="input-bio">Biography</label>
           <textarea cols="30" rows="10" class="form-control" id="input-bio" name="bio"></textarea>
         </div>
         <div class="form-group col-lg-6 col-md-8" style="min-height:200px;">
           <label for="img-upload">New Profile Picture</label>
           <input type="file" id="img-upload" class="form-control-file">
-          <img id="img-preview" class="img-thumbnail mt-2" style="display:none;width:75%;">
+          <img id="img-preview" class="img-thumbnail mt-2" style="display-none; max-length: 200px; max-width: 200px;">
         </div>
       </div>
       <div class="form-group text-center mt-3">
