@@ -1,12 +1,15 @@
+/*
 const db = require('./database/db2.js');
 const collection = 'profiles';
 
 db.createDatabase();
-
+*/
 /*
     creates an object
     containing first name, last name, username, and bio of a user
 */
+
+/*
 var user = {
   _id:"user1",
   username: "CookingBabe",
@@ -103,4 +106,4 @@ var user = {
 
 db.insertOne(collection, user);
 
-
+*/
