@@ -1,0 +1,29 @@
+{{#if values}}
+  <div class="recipe-cards p-3" id="{{section_name}}">
+    {{#split_fours values}}
+    <div class="row mt-4">
+      <div class="card-deck">
+        {{#each this}}
+          {{#if _id}}
+          <div class="recipe-card card text-center">
+            <a href="/recipe/{{_id}}"></a>
+            <img class="card-img-top" src="{{picture_link}}">
+            <div class="card-body bg-cstm-green-lighter">
+              <h6 class="card-title">{{name}}</h6>
+            </div>
+          </div>
+          {{else}}
+          <div class="recipe-card card card-hidden text-center">
+          </div>
+          {{/if}}
+        {{/each}}
+      </div>
+    </div>
+    {{/split_fours}}
+  </div>
+  <script>
+    $("#{{section_name}}").on("click", ".recipe-card", function() {
+      $(this).children("a")[0].click();
+    });
+  </script>
+{{/if}}

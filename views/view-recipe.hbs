@@ -2,16 +2,16 @@
   <div class="container">
     <div class="row justify-content-between">
       <div class="col col-sm-7 bg-cstm-green-lightest">
-        <h1><strong>Ramen and Egg</strong></h1>
+        <h1><strong>{{recipe.name}}</strong></h1>
         <div id="profile-area">
           <a href="#" class="no-hover">
-            <img id="profile-img" class="rounded-circle" src="/img/Faces/stephen-smithgall-vhQZXB5nL3o-unsplash.jpg">
-            <span id="profile-name" class="ml-1 text-dark">Shane Fisher</span>
+            <img id="profile-img" class="rounded-circle" src="{{author.picture_link}}">
+            <span id="profile-name" class="ml-1 text-dark">{{author.display_name}}</span>
           </a>
         </div>
         <div id="recipe-area" class="h-50 mt-5">
           <h2 id="servings"><em>Servings:</em></h2>
-          <h4 id="servings-number"><em>2</em></h4>
+          <h4 id="servings-number"><em>{{recipe.servings}}</em></h4>
         </div>
         <div id="recipe-interactions" class="my-3">
           <h5 class="float-left">0 likes</h5>
@@ -28,34 +28,27 @@
     <div class="row bg-cstm-green-lightest rounded my-3 p-2">
       <div class="col">
         <h1 id="description-header"><strong>Description</strong></h1>
-        <h3 id="description">This is delicious.</h3>
+        <h3 id="description">{{recipe.description}}</h3>
       </div>
     </div>
     <div class="row bg-cstm-green-lightest rounded my-3 p-2">
       <div class="col">
         <h1 id="ingredients-header"><strong>Ingredients</strong></h1>
         <div id="ingredients">
-          2 large eggs<br>
-          A cup of water<br>
-          4 cups chicken broth<br>
-          2 packs instant ramen<br>
-          4 oz. peeled and deveined shrimp<br>
-          4 oz. white mushrooms, sliced into halves<br>
-          2-3 tablespoons sriracha or to taste<br>
-          1 teaspoon sesame oil<br>
-          2 tablespoons chopped scallion<br>
-          salt to taste<br>
-          1 tablespoon lime juice, (optional)<br>
+          {{#each recipe.ingredients}}
+            {{this}}<br>
+          {{/each}}
         </div>
       </div>
     </div>
     <div class="row bg-cstm-green-lightest rounded my-3 p-2">
       <div class="col">
         <h1 id="steps-header"><strong>Steps</strong></h1>
-        <div id="steps">
-          1. Place your eggs in a pot and add cold water. Make sure the water covers the eggs. Bring to a boil over high heat. Remove from the heat and set aside for 6 minutes. Rinse the eggs in cold water, peel off the shell and slice the eggs into halves. Set aside.<br>
-          2. Heat up the pot and add the chicken broth. Bring it to boil. Add the ramen and cook. When the ramen is about half done, add the shrimp, mushroom, Sriracha and sesame oil. Add the chopped scallion, salt and lime juice. Stir well and serve immediately.<br>
-        </div>
+        <ol id="steps">
+          {{#each recipe.steps}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ol>
       </div>
     </div>
     <div class="row">

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var RecipeSchema = new mongoose.Schema({
   name: {
@@ -16,6 +17,10 @@ var RecipeSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+    required: true
+  },
+  servings: {
+    type: Number,
     required: true
   },
   ingredients: {

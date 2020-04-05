@@ -45,8 +45,14 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     required: false
   }
+});
 
-})
+UserSchema.virtual('display_name').get(function() {
+  if (this.firstname && this.lastname) return this.firstname + ' ' + this.lastname;
+  else if (this.firstname) return this.firstname;
+  else if (this.lastname) return this.lastname;
+  else return this.username;
+});
 
 UserSchema.pre("save", function(next) {
   var user = this;
@@ -55,6 +61,12 @@ UserSchema.pre("save", function(next) {
     user.pass_encrypted = hash;
     next();
   });
+});
+
+UserSchema.post("find", function(docs) {
+  for (var doc in docs) {
+    if (!doc.picture_link) doc.picture_link = "/img/default_dp.jpg";
+  }
 });
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

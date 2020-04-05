@@ -1,6 +1,10 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const Handlebars = require('handlebars');
+
+const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const bodyParser = require('body-parser');
 const multer = require('multer');
@@ -18,11 +22,26 @@ dbinit.initializeDefault();
 dbinit.initializeDummy();
 
 const Profile = require('./models/profile-model');
+const Recipe = require('./models/recipe-model');
 
 const port = process.env.PORT || 3000;
 const app = express();
 
 // use handlebars as our template engine
+Handlebars.registerHelper("split_fours", function(array, options) {
+  var result = '';
+  var remaining = array.length;
+  while (remaining > 0) {
+    var take = Math.min(remaining, 4);
+    remaining -= take;
+
+    var subArray = array.slice(0, take);
+    while (subArray.length < 4) subArray.push({ _id: null });
+    result += options.fn(subArray, options);
+  }
+  return result;
+});
+
 app.engine('hbs', exphbs({
   extname: 'hbs',
   defaultView: 'default',
@@ -36,13 +55,11 @@ var sessionOpts = {
   secret: 'put a secret code here',
   resave: true,
   saveUninitialized: false,
-  cookie: {}
+  cookie: {},
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
 };
-
-if (app.get('env') === 'production') {
-  app.set('trust proxy', 1);
-  sessionOpts.cookie.secure = true;
-}
 
 app.use(session(sessionOpts));
 
@@ -50,124 +67,60 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
 
-app.get('/login', function(req, res) {
-  res.render('login', {
-    title: 'Login',
-    returnUrl: req.query['returnUrl'] || ''
-  });
-});
+const authRoute = require('./routes/auth');
+app.use(authRoute);
 
-app.post('/login', function(req, res, next) {
-  var username = req.body['username'];
-  var password = req.body['password'];
-  console.log('User "' + username + '" attempted to log in with passcode ' + password);
-  if (username && password) {
-    Profile.authenticate(username, password, function(err, user) {
-      if (err)        return next(err);
-      else if (!user) return res.redirect('/login');
-      else            return res.redirect(req.body['returnUrl'] || '/');
-    });
-  } else {
-    res.redirect(401, '/login');
-  }
-});
-
-app.get('/register', function(req, res){
-  res.render('register', {
-    title: 'Register',
-    returnUrl: req.query['returnUrl'] || ''
-  });
-});
-
-app.post('/register', upload.single('display'), function(req, res, next) {
-  var username = req.body['username'];
-  var email = req.body['email'];
-  var password = req.body['password'];
-  var confirm = req.body['confirm'];
-
-  var firstName = req.body['firstname'];
-  var lastName = req.body['lastname'];
-  var bio = req.body['bio'];
-
-  var display = req.file;
-  
-  if (username && email && password && confirm && password === confirm) {
-    var userData = {
-      username: username,
-      email: email,
-      pass_encrypted: password,
-  
-      firstname: firstName,
-      lastname: lastName,
-      bio: bio,
-      picture_link: display ? ('/uploads/' + display.filename) : null,
-      is_admin: false
-    };
-
-    console.log("creating user " + userData);
-    Profile.create(userData, function(err, user) {
-      if (err)        return next(err);
-      else if (!user) return res.redirect('/register');
-      else            return res.redirect(req.body['returnUrl'] || '/profile');
-    });
-  } else {
-    console.log("not creating user");
-    return redirect('/register');
-  }
-});
-
-app.get('/profile', function(req, res){
-  res.render('profile', {
-    layout: 'with-nav',
-    registered: false,
-    class: 'bg-cstm-yellow-lightest',
-    title: 'View Profile',
-  });
-});
-
-app.get('/create-recipe', function(req, res){
-  res.render('create-recipe', {
-    layout: 'with-nav',
-    registered: true,
-    class: 'bg-cstm-yellow-lightest',
-    title: 'Create Recipe',
-  });
-});
-
-app.get('/edit-profile', function(req, res){
-  res.render('edit-profile', {
-    layout: 'with-nav',
-    registered: true,
-    class: 'bg-cstm-yellow-lightest',
-    title: 'Edit Profile'
-  });
-});
-
-app.get('/recipe', function(req, res){
-  res.render('recipe', {
-    layout: 'with-nav',
-    registered: false,
-    class: 'bg-cstm-yellow-lightest',
-    title: 'View Recipe',
-  });
-});
+const profileRoute = require('./routes/profile');
+app.use("/profile", profileRoute);
+const recipeRoute = require('./routes/recipe');
+app.use("/recipe", recipeRoute);
 
 app.get('/404', function(req, res){
-  res.render('index', {
+  var params = {
     layout: 'with-nav',
     registered: false,
     class: 'bg-cstm-yellow-lightest',
-    title: 'Landing Page',
+    title: 'Page not found',
+  }
+
+  if (req.session && req.session.loggedIn) {
+    params.registered = true;
+    params.user = req.session.username;
+  }
+
+  res.render('404', params);
+});
+
+app.get('/', function(req, res, next){
+  Recipe.find().exec(function(err, recipes) {
+    if (err) return next(err);
+
+    var params = {
+      layout: 'with-nav',
+      registered: false,
+      class: 'bg-cstm-yellow-lightest',
+      title: 'Cooker: Your repository of recipes',
+      hot_recipes: {
+        section_name: 'hot-recipes',
+        values: recipes.map((doc) => doc.toObject())
+      }
+    };
+  
+    if (req.session && req.session.loggedIn) {
+      params.registered = true;
+      params.user = req.session.username;
+    }
+  
+    res.render('index', params);
   });
 });
 
-app.get('/', function(req, res){
-  res.render('index', {
-    layout: 'with-nav',
-    registered: false,
-    class: 'bg-cstm-yellow-lightest',
-    title: 'Landing Page',
-  });
+app.use(function(err, req, res, next) {
+  if (err.status && err.message) {
+    return res.redirect('/404');
+  } else {
+    return next(err);
+  }
 });
 
 app.get('/*', function(req, res){
