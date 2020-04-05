@@ -12,6 +12,10 @@
                 <label for="username">Username</label>
                 <input id="username" class="form-control" name="username" type="text">
               </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" class="form-control" name="email" type="email">
+              </div>
               <div class="form-group mt-3">
                 <label for="password">Password</label>
                 <input id="password" class="form-control" name="password" type="password">
@@ -64,7 +68,7 @@
   </div>
 </div>
 
-{{!-- <script>
+<script>
   $(document).ready(function() {
     $("#next").click(function() {
       $("#register-basic").hide();
@@ -84,19 +88,5 @@
         reader.readAsDataURL(this.files[0]);
       }
     });
-
-    $('#register').submit(function(e) {
-      // just redirect to adminuser
-      var uname = "adminuser";
-      var pword = "p@ssword!";
-      var user = authenticate(uname, pword);
-      if (user != null) {
-        window.location.replace('index.html?sid=' + user.sid); // TODO: add admin version of all relevant pages
-      } else {
-        alert("Invalid credentials");
-      }
-
-      e.preventDefault();
-    });
   });
-</script> --}}
+</script>
