@@ -17,9 +17,7 @@ database.connect();
 dbinit.initializeDefault();
 dbinit.initializeDummy();
 
-const User = require('./models/user');
-
-
+const Profile = require('./models/profile-model');
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -64,7 +62,7 @@ app.post('/login', function(req, res, next) {
   var password = req.body['password'];
   console.log('User "' + username + '" attempted to log in with passcode ' + password);
   if (username && password) {
-    User.authenticate(username, password, function(err, user) {
+    Profile.authenticate(username, password, function(err, user) {
       if (err)        return next(err);
       else if (!user) return res.redirect('/login');
       else            return res.redirect(req.body['returnUrl'] || '/');
@@ -97,26 +95,25 @@ app.post('/register', upload.single('display'), function(req, res, next) {
     var userData = {
       username: username,
       email: email,
-      passEncrypted: password,
+      pass_encrypted: password,
   
-      firstName: firstName,
-      lastName: lastName,
+      firstname: firstName,
+      lastname: lastName,
       bio: bio,
-      pictureLink: '/uploads/' + display.filename
+      picture_link: display ? ('/uploads/' + display.filename) : null,
+      is_admin: false
     };
 
-    User.create(userData, function(err, user) {
+    console.log("creating user " + userData);
+    Profile.create(userData, function(err, user) {
       if (err)        return next(err);
       else if (!user) return res.redirect('/register');
       else            return res.redirect(req.body['returnUrl'] || '/profile');
     });
   } else {
+    console.log("not creating user");
     return redirect('/register');
   }
-
-  
-
-
 });
 
 app.get('/profile', function(req, res){

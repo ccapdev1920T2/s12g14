@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
-const User = require('./models/user');
+const Profile = require('./models/profile-model');
 
 module.exports.initializeDefault = function() {
   var admin = {
     username: "admin",
     email: "admin@example.com",
-    passEncrypted: "password",
-    isAdmin: true
+    pass_encrypted: "password",
+    is_admin: true
   };
 
-  User.create(admin);
+  Profile.create(admin);
 };
 
 module.exports.initializeDummy = function() {

@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var UserSchema = new mongoose.Schema({
-  _id: Schema.Types.ObjectId,
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -9,11 +10,11 @@ var UserSchema = new mongoose.Schema({
   },
   lastname: {
     type: String,
-    required: true
+    required: false
   },
   firstname: {
     type: String,
-    required: true
+    required: false
   },
   join_date: {
     type: Date,
@@ -22,19 +23,19 @@ var UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true
+    required: false
   },
   bio: {
     type: String,
-    required: true
+    required: false
   },
-  pass_encypted: {
+  pass_encrypted: {
     type: String,
     required: true
   },
   picture_link: {
     type: String,
-    required: true
+    required: false
   },
   is_admin: {
     type: String,
@@ -47,4 +48,35 @@ var UserSchema = new mongoose.Schema({
 
 })
 
-module.exports = mongoose.model('User', UserSchema);
+UserSchema.pre("save", function(next) {
+  var user = this;
+  bcrypt.hash(user.pass_encrypted, 10, function(err, hash) {
+    if (err) return next(err);
+    user.pass_encrypted = hash;
+    next();
+  });
+});
+
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+UserSchema.statics.authenticate = function(usernameOrEmail, password, callback) {
+  var query = {};
+  if (emailRegex.test(usernameOrEmail)) query.email = usernameOrEmail;
+  else                                  query.username = usernameOrEmail;
+  
+  User.findOne(query).exec(function(err, user) {
+    if (err) {
+      return callback(err);
+    } else if (!user) {
+      var err = new Error('User not found.');
+      err.status = 401;
+      return callback(err);
+    }
+    bcrypt.compare(password, user.pass_encrypted, function(err, result) {
+      if (result) return callback(null, user);
+      else        return callback();
+    });
+  });
+};
+
+var User = mongoose.model('User', UserSchema);
+module.exports = User;

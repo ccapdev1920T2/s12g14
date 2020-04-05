@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 
 var RecipeSchema = new mongoose.Schema({
-  _id: Schema.Types.ObjectId,
   name: {
     type: String,
     required: true,
