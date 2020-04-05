@@ -8,9 +8,14 @@ var ReportSchema = new mongoose.Schema({
     required: true
   },
   reported_ID: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true
   },
+  ref: {
+    // 
+    type: String,
+    required: true
+  }
   type: {
     type: String,
     enum: ['sexual','gore','others'],
