@@ -67,10 +67,18 @@
             <div class="mb-3 mt-4" style="min-height: 100px;">
               {{text}}
             </div>
+            {{#if registered}}
             <button type="button" class="btn float-right border-0 bg-cstm-orange"><span style="font-size: 12px;" class="fa fa-minus"></span> Report Comment</button>
+            {{/if}}
           </div>
         </div>
         {{/each}}
+        {{#if registered}}
+        <form action="/recipe/{{recipe._id}}/comment" method="POST">
+          <textarea name="text"></textarea>
+          <button type="submit">Submit</button>
+        </form>
+        {{/if}}
       </div>
     </div>
 </main>

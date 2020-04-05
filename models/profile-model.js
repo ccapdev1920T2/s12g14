@@ -38,7 +38,7 @@ const UserSchema = new mongoose.Schema({
     required: false
   },
   is_admin: {
-    type: String,
+    type: Boolean,
     required: true
   },
   ban_until: {

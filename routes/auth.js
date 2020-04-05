@@ -28,6 +28,8 @@ router.post('/login', function(req, res, next) {
       }
       else {
         req.session.loggedIn = true;
+        req.session.isAdmin = user.is_admin;
+        req.session.userId = user._id;
         req.session.username = username; // TODO: this seems kinda insecure
         return res.redirect(req.body['returnUrl'] || '/');
       }
@@ -87,6 +89,8 @@ router.post('/register', upload.single('display'), function(req, res, next) {
       }
       else {
         req.session.loggedIn = true;
+        req.session.isAdmin = user.is_admin;
+        req.session.userId = user._id;
         req.session.username = username; // TODO: this seems kinda insecure
         return res.redirect(req.body['returnUrl'] || '/profile');
       }

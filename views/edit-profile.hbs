@@ -1,15 +1,15 @@
 <main role="main">
   <div class="container mt-3">
-    <form style="min-height: 800px;">
+    <form style="min-height: 800px;" action="/profile/edit" method="POST">
       <h2>Edit Profile</h2>
       <div class="form-row">
         <div class="form-group col-lg-6 col-md-12">
           <label for="input-firstname">First Name</label>
-          <input type="text" class="form-control" id="input-firstname">
+          <input type="text" class="form-control" id="input-firstname" name="firstname">
         </div>
         <div class="form-group col-lg-6 col-md-12">
           <label for="input-lastname">Last Name</label>
-          <input type="text" class="form-control" id="input-lastname">
+          <input type="text" class="form-control" id="input-lastname" name="lastname">
         </div>
         <div class="form-group col-lg-6 col-md-12">
           <label for="input-bio">Biography</label>
@@ -17,7 +17,7 @@
         </div>
         <div class="form-group col-lg-6 col-md-8" style="min-height:200px;">
           <label for="img-upload">New Profile Picture</label>
-          <input type="file" id="img-upload" class="form-control-file">
+          <input type="file" id="img-upload" class="form-control-file" name="display">
           <img id="img-preview" class="img-thumbnail mt-2" style="display-none; max-length: 200px; max-width: 200px;">
         </div>
       </div>
@@ -28,26 +28,8 @@
   <!-- TODO: add aria-describedby descriptors using small for accessibility -->
 </main>
 
-{{!-- <script>
+<script>
   $(document).ready(function() {
-    var sessionID = getParameterByName('sid');
-    if (sessionID) {
-      var user = fromSession(sessionID);
-      $("#user-dp").attr("src", user.bio.display);
-      var anchors = $("a").toArray();
-      for (var key in anchors) {
-        var anchor = anchors[key];
-        var link = $(anchor).attr("href");
-        if ($(anchor).hasClass('logout')) continue;
-        if (link !== '#') {
-          $(anchor).attr("href", link + '?sid=' + sessionID);
-        }
-      }
-      $("#registered-nav").show();
-    } else {
-      window.location.href = "login.html";
-    }
-
     $("#img-upload").change(function() {
       if (this.files && this.files[0]) {
         var reader = new FileReader();
@@ -59,4 +41,4 @@
       }
     });
   });
-</script> --}}
+</script>

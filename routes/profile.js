@@ -23,6 +23,7 @@ router.get('/edit', function(req, res) {
         res.render('edit-profile', {
           layout: 'with-nav',
           registered: true,
+          is_admin: req.session.isAdmin,
           user: req.session.username,
           self: true,
           profile: {
@@ -41,8 +42,28 @@ router.get('/edit', function(req, res) {
   }
 });
 
-router.post('/edit', function(req, res) {
-  
+router.post('/edit', upload.single('display'), function(req, res, next) {
+  if (req.session && req.session.loggedIn) {
+    var firstname = req.body.firstname;
+    var lastname = req.body.lastname;
+    var bio = req.body.bio;
+
+    var display = req.file;
+
+    var delta = {
+      firstname: firstname,
+      lastname: lastname,
+      bio: bio
+    };
+    if (display) delta.picture_link = '/uploads/' + display.filename;
+
+    Profile.update({ username: req.session.username }, delta, function(err) {
+      if (err)  return next(err);
+      else      return res.redirect('/profile');
+    });
+  } else {
+    return res.redirect('/login');
+  }
 });
 
 // the view others' profiles route
@@ -70,17 +91,43 @@ router.get('/:username', function(req, res) {
               picture_link: user.picture_link
             },
             class: 'bg-cstm-yellow-lightest',
-            title: profileToView +  '\'s Profile',
-            recipes: recipes
+            title: profileToView + '\'s Profile',
+            uploaded_recipes: {
+              section_name: 'uploaded-recipes',
+              values: recipes.map(d => d.toObject())  
+            }
           };
           params.recipe_title = params.profile.display + '\'s Recipes';
     
           if (req.session && req.session.loggedIn) {
             params.registered = true;
+            params.is_admin = req.session.isAdmin;
             params.user = req.session.username;
           }
-    
-          res.render('profile', params);
+
+          // get all recipes this user has liked
+          Like.find({ sender: user._id }).populate('recipe').exec(function(err, likes) {
+            if (err) {
+              return next(err);
+            } else {
+              var liked_recipes = likes.map(d => d.recipe.toObject());
+              params.liked_recipes = {
+                section_name: 'liked-recipes',
+                values: liked_recipes
+              };
+
+              Comment.find({ author: user._id }).populate('recipe').exec(function(err, comments) {
+                var allComments = comments.map(d => d.toObject());
+                params.comments = allComments;
+
+                if (err) {
+                  return next(err);
+                } else {
+                  res.render('profile', params);
+                }
+              });
+            }
+          });
         }
       });
     }

@@ -6,7 +6,7 @@ const router = express.Router();
 const Profile = require('../models/profile-model');
 
 router.post('/ban', function(req, res, next) {
-
+  
 });
 
 // the admin dashboard route

@@ -22,25 +22,27 @@
     </div>
     <div class="row">
       <h2 class="mt-2">Comments</h2>
+      {{#each comments}}
       <div class="recipe-cards p-2">
         <div class="row mt-4">
           <div class="card-deck">
             <div class="row p-1">
               <div class="col-3">
                 <div class="recipe-card card text-center">
-                  <img class="card-img-top" src="/img/anthony-rosset-5vDeo9GVpdw-unsplash.jpg" alt="Ice Cream Bread (Photo by Anthony Rosset on Unsplash)">
+                  <img class="card-img-top" src="{{recipe.picture_link}}">
                   <div class="card-body bg-cstm-green-lighter">
-                    <h6 class="card-title">Ice Cream Bread</h6>
+                    <h6 class="card-title">{{recipe.name}}</h6>
                   </div>
                 </div>
               </div>
               <div class="col p-4 rounded bg-cstm-orange-lighter">
-                <h4 class="lead" id="input-recipe-name">I will try to make more recipes in the future!!</h4>
+                <h4 class="lead" id="input-recipe-name">{{text}}</h4>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {{/each}}
       <button type="button" class="btn btn-cstm-orange-darkest text-light ml-auto mr-auto mt-4 d-block">Show more</button>
     </div>
   </div>
