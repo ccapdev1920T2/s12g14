@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var LikeSchema = new mongoose.Schema({
-  _id: Schema.Types.ObjectId,
   sender: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -17,6 +17,9 @@ var LikeSchema = new mongoose.Schema({
     default: Date.now,
     required: true
   }
-})
+});
 
-module.exports = mongoose.model('Like', LikeSchema)
+LikeSchema.index({ sender: 1, recipe: 1 }, { unique: true });
+
+var Like = mongoose.model('Like', LikeSchema);
+module.exports = Like;

@@ -1,0 +1,100 @@
+<main>
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col col-sm-7 bg-cstm-green-lightest">
+        <h1><strong>{{recipe.name}}</strong></h1>
+        <div id="profile-area">
+          <a href="/profile/{{author.username}}" class="no-hover">
+            <img id="profile-img" class="rounded-circle" src="{{author.picture_link}}">
+            <span id="profile-name" class="ml-1 text-dark">{{author.display_name}}</span>
+          </a>
+        </div>
+        <div id="recipe-area" class="h-50 mt-5">
+          <h2 id="servings"><em>Servings:</em></h2>
+          <h4 id="servings-number"><em>{{recipe.servings}}</em></h4>
+        </div>
+        <div id="recipe-interactions" class="my-3">
+          <h5 class="float-left">{{like_count}} like(s)</h5>
+          {{#if registered}}
+            {{#if liked}}
+            <span id="registered-liked"><a href="/recipe/{{recipeId}}/unlike" class="text-dark">Unlike this recipe</a></span>
+            {{else}}
+            <span id="registered-like"><a href="/recipe/{{recipeId}}/like" class="text-dark">Like this recipe!</a></span>
+            {{/if}}
+          {{else}}
+          <span id="unregistered-like">Register to like recipes!</span>
+          {{/if}}
+        </div>
+      </div>
+      <div class="col col-sm-4 bg-cstm-orange">
+        <img src="{{recipe.picture_link}}" class="rounded img-fluid">
+      </div>
+    </div>
+    <div class="row bg-cstm-green-lightest rounded my-3 p-2">
+      <div class="col">
+        <h1 id="description-header"><strong>Description</strong></h1>
+        <h3 id="description">{{recipe.description}}</h3>
+      </div>
+    </div>
+    <div class="row bg-cstm-green-lightest rounded my-3 p-2">
+      <div class="col">
+        <h1 id="ingredients-header"><strong>Ingredients</strong></h1>
+        <div id="ingredients">
+          {{#each recipe.ingredients}}
+            {{this}}<br>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div class="row bg-cstm-green-lightest rounded my-3 p-2">
+      <div class="col">
+        <h1 id="steps-header"><strong>Steps</strong></h1>
+        <ol id="steps">
+          {{#each recipe.steps}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <h1 id="comments-header">Comments:</h1>
+      <div id="comments">
+        {{#each comments}}
+        <div class="row bg-cstm-orange-lighter my-2 p-2">
+          <div class="col-2">
+            <a href="/profile/{{author.username}}">{{author.display_name}}</a>
+            <a href="/profile/{{author.username}}">
+              <img id="profile-img-1" src="{{author.picture_link}}" class="rounded img-fluid">
+            </a>
+          </div>
+          <div class="col-10">
+            <span class="float-right">{{timestamp}}</span>
+            <div class="mb-3 mt-4" style="min-height: 100px;">
+              {{text}}
+            </div>
+            {{!-- {{#if registered}}
+            <button type="button" class="btn float-right border-0 bg-cstm-orange"><span style="font-size: 12px;" class="fa fa-minus"></span> Report Comment</button>
+            {{/if}}--}}
+            {{#if owned}}
+            <form action="/recipe/{{../recipeId}}/comment/edit" method="POST">
+              <input type="text" class="d-none" name="id" value="{{_id}}">
+              <textarea name="text"></textarea>
+              <button type="submit">Edit</button>
+            </form>
+            <form action="/recipe/{{../recipeId}}/comment/delete" method="POST">
+              <input type="text" class="d-none" name="id" value="{{_id}}">
+              <button type="submit">Delete</button>
+            </form>
+            {{/if}}
+          </div>
+        </div>
+        {{/each}}
+        {{#if registered}}
+        <form action="/recipe/{{recipeId}}/comment" method="POST">
+          <textarea name="text"></textarea>
+          <button type="submit">Submit</button>
+        </form>
+        {{/if}}
+      </div>
+    </div>
+</main>

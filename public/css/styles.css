@@ -14,6 +14,13 @@ a:hover, a:visited, a:link, a:active .no-hover {
   cursor: pointer;
 }
 
+.recipe-card.card-hidden {
+  cursor: default;
+  color: rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .recipe-card a {
   display: none;
 }

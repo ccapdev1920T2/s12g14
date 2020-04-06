@@ -1,35 +1,28 @@
 <main role="main">
   <div class="container mt-3">
-    <form action="index.html" method="POST">
+    <form action="/recipe/new" method="POST" enctype="multipart/form-data">
       <h2>Create Recipe</h2>
       <div id="recipe-main">
         <div class="form-group">
           <label for="input-recipe-name">Input Recipe Name</label>
-          <input type="text" class="form-control" id="input-recipe-name">
+          <input type="text" class="form-control" id="input-recipe-name" name="name">
         </div>
         <div class="form-group">
           <label for="input-servings">Servings</label>
-          <input type="number" min="1" class="form-control" id="input-servings">
+          <input type="number" min="1" class="form-control" id="input-servings" name="servings">
         </div>
-        <div class="form-group">
-          <label for="input-cuisine">Main Cuisine Type</label>
-          <select class="form-control" id="input-cuisine">
-            <option>American</option>
-            <option>English</option>
-            <option>Italian</option>
-            <option>Japanese</option>
-            <option>Spanish</option>
-            <option>Thai</option>
-            <option>Other</option>
-          </select>
+        <div class="form-group clearfix" style="min-height: 300px;">
+          <label for="input-image">Recipe Image</label>
+          <input type="file" id="input-image" class="form-control-file" name="display">
+          <img id="img-preview" class="float-right img-thumbnail mt-2 bg-color-orange" style="display: none;">
         </div>
         <div class="form-group">
           <label for="input-description">Description</label>
-          <textarea class="form-control" id="input-description" cols="30" rows="10" placeholder="Optional."></textarea>
+          <textarea class="form-control" id="input-description" cols="30" rows="10" placeholder="Optional." name="description"></textarea>
         </div>
         <div class="form-group">
           <label for="input-tags">Tags</label>
-          <textarea class="form-control" id="input-tags" cols="30" rows="10" aria-describedby="tags-help" placeholder="Optional."></textarea>
+          <textarea class="form-control" id="input-tags" cols="30" rows="10" aria-describedby="tags-help" placeholder="Optional." name="keywords"></textarea>
           <small id="tags-help" class="text-muted">Each tag should be separated by a space.</small>
         </div>
         <div class="mt-3 form-row justify-content-md-center">
@@ -67,7 +60,7 @@
   <!-- TODO: add aria-describedby descriptors using small for accessibility -->
 </main>
 
-{{!-- <script>
+<script>
   var ingredients = [];
   var steps = [];
 
@@ -87,7 +80,7 @@
       var html = '<div class="form-group row">';
       html += '<label for="ingredient-' + next + '" class="col-sm col-form-label">' + next + '. </label>';
       html += '<div class="col-sm-9">';
-      html += '<input type="text" class="form-control" name="step-' + next + '" id="ingredient-' + next + '">';
+      html += '<input type="text" class="form-control" name="ingredient-' + next + '" id="ingredient-' + next + '">';
       html += '</div>';
       html += '<div class="col-sm">';
       html += '<button type="button" class="recipe-ingredients-remove btn bg-cstm-green rounded-circle">-</button>';
@@ -168,22 +161,15 @@
     });
     addStep();
 
-    var sessionID = getParameterByName('sid');
-    if (sessionID) {
-      var user = fromSession(sessionID);
-      $("#user-dp").attr("src", user.bio.display);
-      var anchors = $("a").toArray();
-      for (var key in anchors) {
-        var anchor = anchors[key];
-        var link = $(anchor).attr("href");
-        if ($(anchor).hasClass('logout')) continue;
-        if (link !== '#') {
-          $(anchor).attr("href", link + '?sid=' + sessionID);
-        }
+    $("#input-image").change(function() {
+      if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(image) {
+          $("#img-preview").attr("src", image.target.result);
+          $("#img-preview").show();
+        };
+        reader.readAsDataURL(this.files[0]);
       }
-      $("#registered-nav").show();
-    } else {
-      $("#unregistered-nav").show();
-    }
+    });
   });
-</script> --}}
+</script>
