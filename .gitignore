@@ -105,3 +105,7 @@ dist
 
 # Custom files and directories to ignore
 uploads/
+
+#ignore as said in https://www.youtube.com/watch?v=aUW5GAFhu6s 3:30?
+.env
+/node_modules
