@@ -227,6 +227,7 @@ router.get('/:id', function(req, res, next) {
       title: recipe.name,
       recipe: recipe.toObject(),
       recipeId: req.params.id,
+      owned: recipe.author._id == req.session.userId,
       author: recipe.author.toObject()
     };
 

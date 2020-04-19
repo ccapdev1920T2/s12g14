@@ -21,6 +21,11 @@
             {{else}}
             <span id="registered-like"><a href="/recipe/{{recipeId}}/like" class="text-dark">Like this recipe!</a></span>
             {{/if}}
+            {{#if owned}}
+            <form action="/recipe/{{recipeId}}/delete" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+            {{/if}}
           {{else}}
           <span id="unregistered-like">Register to like recipes!</span>
           {{/if}}
