@@ -62,7 +62,7 @@ module.exports.initializeDummy = function() {
       email: "rafe-olarte@yopmail.com",
       bio: "\"The best thing you can do for someone is make them a beautiful plate of food.\" -Padma Lakshmi ",
       pass_encrypted: "42345",
-      picture_link: null,
+      picture_link: '/img/faces/LoloRaffy.jpg',
       is_admin: false,
       ban_until: null
     },
@@ -74,7 +74,7 @@ module.exports.initializeDummy = function() {
       email: "gitana-gonzaga@yopmail.com",
       bio: "اتَّكَلْنا منه على خُصٍّ الاتحاد قوة “Unity is power.”",
       pass_encrypted: "52345",
-      picture_link: null,
+      picture_link: '/img/faces/TambayngDubai.jpg',
       is_admin: false,
       ban_until: null
     },
@@ -86,7 +86,7 @@ module.exports.initializeDummy = function() {
       email: "monte-evangelista@yopmail.com",
       bio: "All your dreams can come true and I'll make sure of it.",
       pass_encrypted: "62345",
-      picture_link: null,
+      picture_link: '/img/faces/angels_basket.jpg',
       is_admin: false,
       ban_until: null
     },
@@ -98,7 +98,7 @@ module.exports.initializeDummy = function() {
       email: "spencer-corporal@yopmail.com",
       bio: "In a world of average, I’m savage",
       pass_encrypted: "72345",
-      picture_link: null,
+      picture_link: '/img/faces/true.living.jpg',
       is_admin: false,
       ban_until: null
     },
@@ -110,7 +110,7 @@ module.exports.initializeDummy = function() {
       email: "korbin-miedes@yopmail.com",
       bio: "I believe in helping people",
       pass_encrypted: "82345",
-      picture_link: null,
+      picture_link: '/img/faces/iamwellandgood.jpg',
       is_admin: false,
       ban_until: null
     },
@@ -122,7 +122,7 @@ module.exports.initializeDummy = function() {
       email: "tommy-halili@yopmail.com",
       bio: "Be young. Be dope. Run the show.",
       pass_encrypted: "92345",
-      picture_link: null,
+      picture_link: '/img/faces/publicbutter.jpg',
       is_admin: false,
       ban_until: null
     },
@@ -134,7 +134,7 @@ module.exports.initializeDummy = function() {
       email: "catalin-batac@yopmail.com",
       bio: "Love 💗 and Peace ✌️",
       pass_encrypted: "02345",
-      picture_link: null,
+      picture_link: '/img/faces/wherearetheavocados.jpg',
       is_admin: false,
       ban_until: null
     }
@@ -231,7 +231,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Mojos",
-        picture_link: null,
+        picture_link: '/img/Mojos.jpg',
         author: randomProfile(),
         description:"Anyone who orders from Shakey's almost always orders the famous mojos (potato slices), too.  Since dining out isn't an option because all Metro Manila Shakey's branches are temporarily closed because of the quarantine, the next best thing you can do is to recreate your faves with food hacks!",
         servings: 10,
@@ -251,7 +251,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Chicken Goto Recipe",
-        picture_link: null,
+        picture_link: '/img/Chicken_Goto_Recipe.jpg',
         author: randomProfile(),
         description:"Do you know the differences between goto, lugaw, and congee? All of these are your basic rice porridge dishes usually made with malagkit rice that is simmered in lots of water to create a gruel. Chicken lugaw is more commonly known as arroz caldo since the congee is made with meaty chicken pieces and flavored with ginger. When it's made with beef tripe, this lugaw is known a goto. This chicken goto recipe is really a mashup of two of these: the arroz caldo and the goto. This is an arroz caldo because it's flavored with chicken and ginger but it's also a goto because chicken isaw (intestines) and balunbalunan (gizzard) are added to the mix making it even heartier than your usual lugaw! ",
         
@@ -284,7 +284,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Malunggay and Corn Soup with Egg Recipe",
-        picture_link: null,
+        picture_link: '/img/Malunggay_and_Corn_Soup_with_Egg_Recipe.jpg',
         author: randomProfile(),
         description:"Do you know the differences between goto, lugaw, and congee? All of these are your basic rice porridge dishes usually made with malagkit rice that is simmered in lots of water to create a gruel. Chicken lugaw is more commonly known as arroz caldo since the congee is made with meaty chicken pieces and flavored with ginger. When it's made with beef tripe, this lugaw is known a goto. This chicken goto recipe is really a mashup of two of these: the arroz caldo and the goto. This is an arroz caldo because it's flavored with chicken and ginger but it's also a goto because chicken isaw (intestines) and balunbalunan (gizzard) are added to the mix making it even heartier than your usual lugaw! Malunggay and corn soup isn't a new idea. It's actually one of the simplest ways of making soup! It's basically just four ingredients: malunggay, corn, an onion, and chicken broth. A little oil gently heats up the ingredients, and salt and pepper to boost the overall flavors are all that's needed to make this flavorful and hearty soup. It's a simple dish, so why not add a little something to make it even more delicious? Make it a mashup of the egg drop soup and the malunggay and corn soup to make it more appetizing. Plus, we ditch the popular yellow corn for some sweet purple and white corn instead. Also known as Batik or Violeta, this dual-colored white corn variety is much like the waxy white corn ears but tastes sweeter and is more nutritious overall than the yellow corn. You will more easily find these purple and white corn ears around the country in supermarkets (we found ours in Robinsons Supermarket!) and palengkes. ",
         
@@ -309,7 +309,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Chicken Pakam Recipe",
-        picture_link: null,
+        picture_link: '/img/Chicken_Pakam_Recipe.jpg',
         author: randomProfile(),
         description:"This regional dish from Bulacan is a simple chicken and ginger dish. However, what makes it super delicious is the way it's cooked. You taste all the flavors in one amazing bite! It's simple yet delicious! ",
         
@@ -335,7 +335,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "No-Cook Ham and Cheese Palaman",
-        picture_link: null,
+        picture_link: '/img/No-Cook_Ham_and_Cheese_Palaman.jpg',
         author: randomProfile(),
         description:"Ham and cheese is a combination that is an instant hit! From a simple placing of a slice each of ham and cheese between bread slices, you can amp up the flavor by adding more to the mix. Here, ham is chopped up and the cheese is grated, but there is more to it than just that. Pickle relish is added to the mix for a touch of tangy-sweetness and a tiny crunch while the mayonnaise becomes the silky creaminess that combines all the ingredients together. The condensed milk is optional but it boosts both the sweetness and creaminess of the spread.  ",
         
@@ -360,7 +360,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Pork Ribs Tinola",
-        picture_link: null,
+        picture_link: '/img/Pork_Ribs_Tinola.jpg',
         author: randomProfile(),
         description:"What makes swapping out one kind of meat for another kind of meat difficult? For this tinola reicpe, nothing! It's an easy swap to tweak your tinola recipe to be made from chicken to pork! You still get the delicious ginger soup flavors you love in tinola but with the added meatiness that pork can give. ",
         
@@ -391,7 +391,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Spicy Nilagang Baka",
-        picture_link: null,
+        picture_link: '/img/Spicy_Nilagang_Baka.jpg',
         author: randomProfile(),
         description:"The nilagang baka is one of those recipes that is a tried and tested classic dish. It's a favorite especially those who love sipping flavorful soups before getting down to the meat. Some eat it in bowls of rice swimming in the broth! If you are one of those people who love their food with a touch of heat, you'll want to skip the condiments for this spicy nilagang baka recipe has all the flavors you need already in it. ",
         
@@ -421,7 +421,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Flavorful Chicken Afritada",
-        picture_link: null,
+        picture_link: '/img/Flavorful_Chicken_Afritada.jpg',
         author: randomProfile(),
         description:"Whether for a special occasion or a family lunch, Filipinos love chicken afritada, served beside a large serving of rice to soak up the rich flavors of the tomato-based sauce. Since this hearty dish is commonly made with chicken that's first pan-fried to brown before it's simmered to make the stew, the challenge is to make sure that the flavors of the meat are not lost in the mix of tomatoes, peppers, potatoes, and more. Add a flavor kick with Knorr Chicken Cubes for extra meatiness-the secret to the sauce.",
         
@@ -452,7 +452,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Easy Pork Menudo",
-        picture_link: null,
+        picture_link: '/img/Easy_Pork_Menudo.jpg',
         author: randomProfile(),
         description:"Pork menudo is a dish that can be served at anytime, but during festivities like Christmas, this lutong bahay favorite can go all out to suit the occasion. With colorful bell peppers, sweet raisins, and rich pork flavors enhanced by Knorr Pork Cubes, this dish is sure to be one of the highlights of your Noche Buena. ",
         
@@ -487,7 +487,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Homestyle Chicken Inasal",
-        picture_link: null,
+        picture_link: '/img/Homestyle_Chicken_Inasal.jpg',
         author: randomProfile(),
         description:"Expecting guests? Skip the crowded resto-grills and make this balikbayan favorite at home. Chicken Inasal gets its name from the Ilonggo word for being roasted, but the key to that mouthwatering flavor is in the marinade. Keep these must-have special ingredients handy-Sinamak vinegar, lemongrass, atsuete oil, and Knorr chicken cubes-and have a batch soaking in the flavor in the fridge, ready to throw on the grill for gatherings of all sizes.",
         
@@ -517,7 +517,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Easy Creamy Chicken Pastel",
-        picture_link: null,
+        picture_link: '/img/Easy_Creamy_Chicken_Pastel.jpg',
         author: randomProfile(),
         description:"Creamy and comforting, this chicken dish can be adapted for many dishes: served with rice for a family meal, used as a filling with mini crusts as an appetizer, or, our favorite below, topped with cheese as a melt-in-your-mouth party casserole. So many delicious options to satisfy your needs and your family's taste buds! No matter what you pair it with, make sure to balance out the creaminess with a Knorr Chicken Cube and maximize the chicken flavor in every saucy bite.",
         
@@ -549,7 +549,7 @@ module.exports.initializeDummy = function() {
       },
       {
         name: "Classic Kare-Kare",
-        picture_link: null,
+        picture_link: '/img/Classic_Kare-Kare.jpg',
         author: randomProfile(),
         description:"With Noche Buena and Media Noche coming up, a nostalgic meal, one with a recipe that's been passed down from generation to generation, deserves a place at the table. Kare-kare is a perfect example. Fill your pot with different veggies like eggplant, pechay, and sitaw, and make sure to enhance the flavor of the meat with Knorr Pork Cubes. There'll surely be requests for seconds!",
         
