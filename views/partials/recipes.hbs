@@ -26,4 +26,8 @@
       $(this).children("a")[0].click();
     });
   </script>
+{{else}}
+  <div class="col" id="{{section_name}}"> 
+    <div class="h5 text-center my-5">Oops, looks there's no recipes here yet!</div>
+  </div>
 {{/if}}
