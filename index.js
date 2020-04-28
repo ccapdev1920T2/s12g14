@@ -31,11 +31,13 @@ const app = express();
 Handlebars.registerHelper("split_fours", function(array, options) {
   var result = '';
   var remaining = array.length;
+  var offset = 0;
   while (remaining > 0) {
     var take = Math.min(remaining, 4);
     remaining -= take;
 
-    var subArray = array.slice(0, take);
+    var subArray = array.slice(offset, offset + take);
+    offset += take;
     while (subArray.length < 4) subArray.push({ _id: null });
     result += options.fn(subArray, options);
   }
