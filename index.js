@@ -72,6 +72,7 @@ app.use(authRoute);
 
 const profileRoute = require('./routes/profile');
 app.use("/profile", profileRoute);
+
 const recipeRoute = require('./routes/recipe');
 app.use("/recipe", recipeRoute);
 
