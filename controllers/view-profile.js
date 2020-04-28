@@ -1,6 +1,7 @@
 const Profile = require('../models/profile-model');
 const Recipe = require('../models/recipe-model');
 const Like = require('../models/like-model');
+const Comment = require('../models/comment-model');
 
 const viewProfileController = {
   getOtherProfile: function(req, res){
