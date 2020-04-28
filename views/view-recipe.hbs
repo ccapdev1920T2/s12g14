@@ -17,9 +17,9 @@
           <h5 class="float-left">{{like_count}} like(s)</h5>
           {{#if registered}}
             {{#if liked}}
-            <span id="registered-liked"><a href="/recipe/{{recipeId}}/unlike" class="text-dark">Unlike this recipe</a></span>
+            <span class="float-right" id="registered-liked"><a href="/recipe/{{recipeId}}/unlike" class="text-dark">Unlike this recipe</a></span>
             {{else}}
-            <span id="registered-like"><a href="/recipe/{{recipeId}}/like" class="text-dark">Like this recipe!</a></span>
+            <span class="float-right" id="registered-like"><a href="/recipe/{{recipeId}}/like" class="text-dark">Like this recipe!</a></span>
             {{/if}}
             {{#if owned}}
             <form action="/recipe/{{recipeId}}/delete" method="POST">
@@ -31,7 +31,7 @@
           {{/if}}
         </div>
       </div>
-      <div class="col col-sm-4 bg-cstm-orange">
+      <div class="col col-sm-4 bg-cstm-orange" style="min-height: 350px;">
         <img src="{{recipe.picture_link}}" class="rounded img-fluid">
       </div>
     </div>
@@ -81,9 +81,11 @@
                 <div class="mb-3 mt-4" style="min-height: 100px;">
                   {{text}}
                 </div>
-                {{!-- {{#if registered}}
-                <button type="button" class="btn float-right border-0 bg-cstm-orange"><span style="font-size: 12px;" class="fa fa-minus"></span> Report Comment</button>
-                {{/if}}--}}
+                {{#if ../registered}}
+                {{#unless owned}}
+                <button type="button" class="btn float-right border-0 bg-cstm-orange"><span style="font-size: 12px;" class="fa fa-flag"></span>  Report</button>
+                {{/unless}}
+                {{/if}}
                 {{#if owned}}
                 <form action="/recipe/{{../recipeId}}/comment/edit" method="POST">
                   <div class="form-group">
@@ -123,3 +125,8 @@
       </div>
     </div>
 </main>
+
+<script>
+
+  
+</script>
