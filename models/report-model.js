@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-
+var Schema = mongoose.Schema;
 var ReportSchema = new mongoose.Schema({
   _id: Schema.Types.ObjectId,
   author: {

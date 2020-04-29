@@ -2,6 +2,11 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const Recipe = require('./recipe-model');
+const Like = require('./report-model');
+const Comment = require('./comment-model');
+const Report = require('./report-model');
+
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -54,6 +59,7 @@ UserSchema.virtual('display_name').get(function() {
   else return this.username;
 });
 
+// trying to add a document saves the data with an already encrypted password
 UserSchema.pre("save", function(next) {
   var user = this;
   bcrypt.hash(user.pass_encrypted, 10, function(err, hash) {
@@ -62,6 +68,15 @@ UserSchema.pre("save", function(next) {
     next();
   });
 });
+
+// UserSchema.pre('remove', function(next){
+//   Comment.deleteMany({author: this._id}).exec();
+//   Like.deleteMany({author: this._id}).exec();
+//   Report.deleteMany({reported_ID: this._id, reported_ref: 'User'}).exec();
+//   Report.deleteMany({author: this._id}).exec();
+//   Recipe.deleteMany({author: this._id}).exec();
+//   next();
+// });
 
 UserSchema.post("find", function(docs) {
   for (var doc in docs) {

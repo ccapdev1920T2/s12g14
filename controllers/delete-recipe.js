@@ -10,15 +10,7 @@ const deleteRecipeController = {
       Recipe.deleteOne({ _id: recipeId, author: req.session.userId }, function(err) {
         if (err)  return next(err);
         else {
-          Like.deleteMany({ recipe: recipeId }, function(err) {
-            if (err)  return next(err);
-            else {
-              Comment.deleteMany({ recipe: recipeId }, function(err) {
-                if (err)  return next(err);
-                else      return res.redirect('/profile');
-              });
-            }
-          });
+          res.redirect('/')
         }
       });
     } else {
