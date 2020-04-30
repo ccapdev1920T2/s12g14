@@ -94,13 +94,17 @@ UserSchema.statics.authenticate = function(usernameOrEmail, password, callback) 
     if (err) {
       return callback(err);
     } else if (!user) {
-      var err = new Error('User not found.');
+      var err = new Error('Username/password invalid.');
       err.status = 401;
       return callback(err);
     }
     bcrypt.compare(password, user.pass_encrypted, function(err, result) {
       if (result) return callback(null, user);
-      else        return callback();
+      else {
+        var err = new Error('Username/password invalid.');
+        err.status = 401;
+        return callback(err);
+      }
     });
   });
 };
