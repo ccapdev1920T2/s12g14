@@ -5,7 +5,7 @@ const registerController = {
     res.render('register', {
       title: 'Register',
       returnUrl: req.query['returnUrl'] || ''
-      });
+    });
   },
 
   postRegister: function(req, res, next) {
@@ -34,6 +34,7 @@ const registerController = {
       };
 
       console.log("creating user " + userData);
+      // encrypted using bcrypt in the model itself
       Profile.create(userData, function(err, user) {
         if (err) {
           return next(err);
@@ -52,6 +53,15 @@ const registerController = {
       console.log("not creating user");
       return redirect('/register');
     }
+  },
+
+  getCheckUsername: function(req, res){
+    var username = req.query.username;
+    console.log('Username tested: \n' + username);
+    Profile.findOne({username: username}, 'username', function(err, result) {
+      console.log(result);
+      res.send(result);
+    });
   }
 }
 

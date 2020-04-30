@@ -17,5 +17,6 @@ router.get('/logout', logoutController.getLogout);
 
 router.get('/register', registerController.getRegister);
 router.post('/register', upload.single('display'), registerController.postRegister);
+router.get('/getCheckUsername', registerController.getCheckUsername);
 
 module.exports = router;

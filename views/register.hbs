@@ -10,44 +10,49 @@
             <div id="register-basic">
               <div class="form-group">
                 <label for="username">Username</label>
-                <input id="username" class="form-control" name="username" type="text">
+                <input id="username" class="form-control input-basic" name="username" type="text">
+                <small id="usernameError" class="form-err my-1">{{usernameError}}</small>
               </div>
               <div class="form-group">
                 <label for="email">Email</label>
-                <input id="email" class="form-control" name="email" type="email">
+                <input id="email" class="form-control input-basic" name="email" type="email">
+                <small id="emailError" class="form-err my-1">{{emailError}}</small>
               </div>
               <div class="form-group mt-3">
                 <label for="password">Password</label>
-                <input id="password" class="form-control" name="password" type="password">
+                <input id="password" class="form-control input-basic" name="password" type="password">
+                <small id="passwordError" class="form-err my-1">{{passwordError}}</small>
               </div>
               <div class="form-group mt-3">
                 <label for="confirm">Confirm password</label>
-                <input id="confirm" class="form-control" name="confirm" type="password">
+                <input id="confirm" class="form-control input-basic" name="confirm" type="password">
+                <small id="confirmError" class="form-err my-1">{{confirmError}}</small>
               </div>
-              <input id="next" type="button" class="btn btn-cstm-orange" value="Next">
+              <input id="next" type="button" class="btn btn-cstm-orange" value="Next" disabled>
               <p class="mt-3">Have an account? <a href="/login" class="font-weight-bold text-cstm-orange-darkest">Login</a></p>
             </div>
             <div id="register-bio" style="display: none;">
               <div class="row">
                 <div class="col">
                   <label for="firstname">First name</label>
-                  <input id="firstname" class="form-control" name="firstname" type="text">
+                  <input id="firstname" class="form-control input-bio" name="firstname" type="text">
+                  <small id="firstnameError" class="form-err my-1">{{firstnameError}}</small>
                 </div>
                 <div class="col">
                   <label for="lastname">Last name</label>
-                  <input id="lastname" class="form-control" name="lastname" type="text">
+                  <input id="lastname" class="form-control input-bio" name="lastname" type="text">
                 </div>
               </div>
               <div class="row mt-3">
                 <div class="col">
                   <label for="bio">Biography</label>
-                  <textarea id="bio" class="form-control" name="bio" rows="5" type="text"></textarea>
+                  <textarea id="bio" class="form-control input-bio" name="bio" rows="5" type="text"></textarea>
                   <div class="row mt-5">
                     <div class="col-4">
                       <input id="prev" type="button" class="btn btn-cstm-orange-lightest" value="Previous">
                     </div>
                     <div class="col-4">
-                      <input type="submit" class="btn btn-cstm-orange" value="Register">
+                      <input id="final-submit" type="submit" class="btn btn-cstm-orange" value="Register" disabled>
                     </div>
                   </div>
                 </div>
@@ -68,25 +73,4 @@
   </div>
 </div>
 
-<script>
-  $(document).ready(function() {
-    $("#next").click(function() {
-      $("#register-basic").hide();
-      $("#register-bio").show();
-    });
-    $("#prev").click(function() {
-      $("#register-bio").hide();
-      $("#register-basic").show();
-    });
-    $("#display").change(function() {
-      if (this.files && this.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(image) {
-          $("#display-preview").attr("src", image.target.result);
-          $("#display-preview").show();
-        };
-        reader.readAsDataURL(this.files[0]);
-      }
-    });
-  });
-</script>
+<script src="/js/register.js" type="text/javascript"></script>
