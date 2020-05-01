@@ -65,6 +65,7 @@ var sessionOpts = {
 
 app.use(session(sessionOpts));
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
