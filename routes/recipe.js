@@ -1,5 +1,6 @@
 // subroutes for the /recipe route
 
+const err = require('../errors');
 const express = require('express');
 const router = express();
 
@@ -22,6 +23,8 @@ const likeController = require('../controllers/like.js');
 const commentController = require('../controllers/comment.js');
 const viewRecipeController = require('../controllers/view-recipe.js');
 
+const Like = require('../models/like-model');
+
 router.get('/new', newRecipeController.getNew);
 router.post('/new', upload.single('display'), newRecipeController.postNew);
 
@@ -30,6 +33,8 @@ router.post('/:id/edit', editRecipeController.postEdit);
 
 router.post('/:id/delete', deleteRecipeController.postDelete);
 
+
+router.get('/:id/likes', likeController.getLikes);
 router.get('/:id/like', likeController.getLike);
 router.get('/:id/unlike', likeController.getUnlike);
 

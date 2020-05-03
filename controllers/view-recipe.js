@@ -1,10 +1,12 @@
 const Recipe = require('../models/recipe-model');
 const Like = require('../models/like-model');
 const Comment = require('../models/comment-model');
+const err = require('../errors');
 
 const viewRecipeController = {
   getRecipe: function(req, res, next){
-    Recipe.findOne({ _id: req.params.id }).populate("author").exec(function(err, recipe) {
+    Recipe.findOne({ _id: req.params.id })
+    .populate("author").exec(function(err, recipe) {
       if (err) return next(err);
       if (!recipe) return next({ status: 404, message: 'Recipe not found' });
 
@@ -15,6 +17,7 @@ const viewRecipeController = {
         title: recipe.name,
         recipe: recipe.toObject(),
         recipeId: req.params.id,
+        owned: recipe.author._id == req.session.userId,
         author: recipe.author.toObject()
       };
 
