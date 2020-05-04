@@ -12,9 +12,9 @@ var ReportSchema = new mongoose.Schema({
     required: true
   },
   reported_ref: {
-    // Ref for reported ID, either User/Comment
+    // Ref for reported ID, either Recipe/Comment
     type: String,
-    enum: ['User', 'Comment'],
+    enum: ['Recipe', 'Comment'],
     required: true
   },
   category: {
@@ -26,12 +26,15 @@ var ReportSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  process_timestamp: {
+  timestamp: {
     type : Date, 
+    default: Date.now,
     required: true
+  },
+  process_timestamp: {
+    type : Date,
+    required: false
   }
-  
-  
 })
 
 module.exports = mongoose.model('Report', ReportSchema)

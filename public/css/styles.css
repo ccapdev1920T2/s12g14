@@ -53,3 +53,7 @@ a:hover, a:visited, a:link, a:active .no-hover {
 #login-logo {
   font-size: 3em;
 }
+
+#registered-like {
+  cursor: pointer;
+}

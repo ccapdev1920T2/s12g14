@@ -1,14 +1,13 @@
 const Like = require('../models/like-model');
 
 const likeController = {
-  getLike: function(req, res, next){
+  postLike: function(req, res, next){
     if (req.session && req.session.loggedIn) {
       Like.create({ recipe: req.params.id, sender: req.session.userId })
       .then(function(like) {
-        console.log(like);
         // Generic message; use status code to check for success
         if (like) res.send("Success!");
-        else      throw Error("Recipe is still not liked.");
+        else      res.status(400).send("Recipe still not liked");
       })
       .catch(function(reason) {
         res.status(500).json({ error: {
@@ -17,27 +16,29 @@ const likeController = {
         }});
       });
     } else {
-      res.status(401).json({ error: { message: "Not logged in." }});
+      res.status(401).json({ error: err.unauthorized() });
     }
   },
 
-  getUnlike: function(req, res, next){
+  postUnlike: function(req, res, next){
     if (req.session && req.session.loggedIn) {
       Like.deleteOne({ recipe: req.params.id, sender: req.session.userId }).exec()
       .then(function(result) {
         if (result.ok) {
-          if (result.n == 0) res.status(401).send({ error: "Recipe not liked. " });
+          if (result.n == 0) res.status(400).send({ error: "Recipe not liked. " });
+          else               res.send("Success!");
+        } else {
+          res.status(500).send("Weird..."); // Generic message; use status code to check for success
         }
-        res.send("Success!"); // Generic message; use status code to check for success
       })
       .catch(function(reason) {
-        res.status(400).json({ error: {
+        res.status(500).json({ error: {
           message: "An error occurred.",
           details: reason
         }});
       });
     } else {
-      res.status(401).json({ error: { message: "Not logged in." }});
+      res.status(401).json({ error: err.unauthorized() });
     }
     // if (req.session && req.session.loggedIn) {
     //   Like.deleteOne({ recipe: req.params.id, sender: req.session.userId }, function(err) {
@@ -55,7 +56,7 @@ const likeController = {
       res.json({ count: likes.length });  
     })
     .catch(function(reason) {
-      res.status(400).json({ error: err.create(err.GENERIC_ERROR, "An error occurred.", reason) });
+      res.status(500).json({ error: err.generic("An error occurred.", reason) });
     });
   }
 }

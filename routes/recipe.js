@@ -22,6 +22,8 @@ const likeController = require('../controllers/like.js');
 const commentController = require('../controllers/comment.js');
 const viewRecipeController = require('../controllers/view-recipe.js');
 
+const reportController = require('../controllers/report.js');
+
 const Like = require('../models/like-model');
 
 router.get('/new', newRecipeController.getNew);
@@ -32,11 +34,11 @@ router.post('/:id/edit', editRecipeController.postEdit);
 
 router.post('/:id/delete', deleteRecipeController.postDelete);
 
-
 router.get('/:id/likes', likeController.getLikes);
-router.get('/:id/like', likeController.getLike);
-router.get('/:id/unlike', likeController.getUnlike);
+router.post('/:id/like', likeController.postLike);
+router.post('/:id/unlike', likeController.postUnlike);
 
+router.get('/:id/comment', commentController.getComments);
 router.post('/:id/comment', commentController.postCommentNew);
 router.post('/:id/comment/edit', commentController.postCommentEdit);
 router.post('/:id/comment/delete', commentController.postCommentDelete);
@@ -45,8 +47,7 @@ router.get('/:id', viewRecipeController.getRecipe);
 
 // REPORT
 
-router.post("/:id/report", function(req, res) {
-
-});
+router.post('/:id/report', reportController.postReportRecipe);
+router.post('/:id/comment/:cid/report', reportController.postReportComment);
 
 module.exports = router;

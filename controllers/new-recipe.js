@@ -16,24 +16,23 @@ const newRecipeController = {
     }
   },
 
-//router.post('/new', upload.single('displ'))
-// AJAX API:
-// The data to be passed to this endpoint should contain the following fields:
-//   name:         the name of the recipe                        (string)
-//   description:  the user-provided description for the recipe  (string?)
-//   servings:     how many servings this recipe has             (int)
-//   ingredients:  the list of ingredients for this recipe       (string[])
-//   steps:        the steps for creating the recipe             (string[])
-//   keywords:     the keywords associated with this recipe      (string[]?)
-//
-// The following fields are implicit to the request:
-//   author:       the author information is stored in the session, which should be present
-//   upload_date:  when the recipe is uploaded; it can be tracked by the server upon receiving the
-//                 request
-//   picture_link: this is handled by the file upload mechanism
+  //router.post('/new', upload.single('displ'))
+  // AJAX API:
+  // The data to be passed to this endpoint should contain the following fields:
+  //   name:         the name of the recipe                        (string)
+  //   description:  the user-provided description for the recipe  (string?)
+  //   servings:     how many servings this recipe has             (int)
+  //   ingredients:  the list of ingredients for this recipe       (string[])
+  //   steps:        the steps for creating the recipe             (string[])
+  //   keywords:     the keywords associated with this recipe      (string[]?)
+  //
+  // The following fields are implicit to the request:
+  //   author:       the author information is stored in the session, which should be present
+  //   upload_date:  when the recipe is uploaded; it can be tracked by the server upon receiving the
+  //                 request
+  //   picture_link: this is handled by the file upload mechanism
   postNew: function(req, res, next){
     if (req.session && req.session.loggedIn) {
-      var obj = {};
       var errors = [];
   
       if (req.body.name === undefined) errors.push(err.missingField("name", "Recipe name is required."));

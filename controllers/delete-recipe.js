@@ -42,7 +42,7 @@ const deleteRecipeController = {
         })
       })
       .catch(function(reason) {
-        res.status(500).json({ error: err.create(err.GENERIC_ERROR, "Could not delete recipe.", reason) });
+        res.status(500).json({ error: err.generic("Could not delete recipe.", reason) });
       });
     } else {
       res.status(401).json({ error: err.unauthorized() });

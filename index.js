@@ -73,6 +73,9 @@ app.use('/uploads', express.static('uploads'));
 const authRoute = require('./routes/auth');
 app.use(authRoute);
 
+const adminRoute = require('./routes/admin');
+app.use("/admin", adminRoute);
+
 const profileRoute = require('./routes/profile');
 app.use("/profile", profileRoute);
 

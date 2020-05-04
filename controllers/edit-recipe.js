@@ -30,7 +30,6 @@ const editRecipeController = {
   
   postEdit: function(req, res) {
     if (req.session && req.session.loggedIn) {
-      var obj = {};
       var errors = [];
   
       if (req.body.name === undefined) errors.push(err.missingField("name", "Recipe name is required."));
@@ -66,7 +65,7 @@ const editRecipeController = {
       };
   
       if (req.file) doc.picture_link = '/uploads/' + req.file.filename;
-  
+
       Recipe.findOneAndUpdate(query, doc).exec()
       .then(function(recipe) {
         res.json({ id: recipe._id });
@@ -75,20 +74,8 @@ const editRecipeController = {
         res.status(500).json({ error: err.generic("Could not edit recipe.", reason)});
       });
     } else {
-      res.status(401).json({ error: err.unauthorized()})
+      res.status(401).json({ error: err.unauthorized()});
     }
-    /*if (req.session && req.session.loggedIn) {
-      var recipeId = req.body.id;
-      
-      var delta = {};
-  
-      Recipe.updateOne({ _id: recipeId, author: req.session.userId }, delta, function(err) {
-        if (err)  return next(err);
-        else      return res.redirect('/profile');
-      });
-    } else {
-      res.redirect('/login');
-    }*/
   }
 }
 
