@@ -5,16 +5,17 @@ var isOpen = false;
 var mongod = null;
 
 module.exports.connect = async (url) => {
+  // If we are already connected, just return.
   if (isOpen) return;
 
   const mongooseOpts = {
     useNewUrlParser: true,
     autoReconnect: true,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000
+    reconnectTries: Number.MAX_VALUE, // try connecting to the database as many times as it can
+    reconnectInterval: 1000           // reconnect every one second
   };
   
-  // use an in-memory mongodb server if url is not provided
+  // Use an in-memory mongodb server if database URL is not provided.
   if (!url) {
     mongod = new MongoMemoryServer();
     url = await mongod.getConnectionString();

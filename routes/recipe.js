@@ -15,7 +15,6 @@ const storage = multer.diskStorage({
 })
 const upload = multer(storage);
 
-
 const newRecipeController = require('../controllers/new-recipe.js');
 const editRecipeController = require('../controllers/edit-recipe.js');
 const deleteRecipeController = require('../controllers/delete-recipe.js');
@@ -43,5 +42,11 @@ router.post('/:id/comment/edit', commentController.postCommentEdit);
 router.post('/:id/comment/delete', commentController.postCommentDelete);
 
 router.get('/:id', viewRecipeController.getRecipe);
+
+// REPORT
+
+router.post("/:id/report", function(req, res) {
+
+});
 
 module.exports = router;

@@ -24,4 +24,8 @@ router.get('/:username', viewProfileController.getOtherProfile);
 // the view your own profile route
 router.get('/', viewProfileController.getOwnProfile);
 
+router.delete("/", function(req, res) {
+  
+});
+
 module.exports = router;
