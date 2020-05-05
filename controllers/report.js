@@ -22,19 +22,18 @@ const reportController = {
             report.author.display_name = doc.author.display_name;
             return report;
           });
-          res.json({ count: reports.length, reports: reports });
+          //res.json({ count: reports.length, reports: reports });
+          // TODO: make reports view
         })
         .catch(function(reason) {
-          res.status(500).json({ error: {
-            message: "An error occurred.",
-            details: reason
-          }});
+          res.status(500).redirect('/404'); // TODO: redirect to error (not 404) page
+          //res.status(404).redirect('/404');
         });
       } else {
-        res.status(401).json({ error: err.unauthorized("Not an admin account.") });
+        res.status(404).redirect('/404');
       }
     } else {
-      res.status(401).json({ error: err.unauthorized() });
+      res.status(404).redirect('/404');
     }
   },
 
