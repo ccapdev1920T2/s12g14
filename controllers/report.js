@@ -1,16 +1,19 @@
 const Recipe = require('../models/recipe-model');
 const Comment = require('../models/comment-model');
+const Like = require('../models/like-model');
 const Report = require('../models/report-model');
+const Profile = require('../models/profile-model');
 
 const err = require('../errors');
+const sanitizer = require('sanitize')();
 
 const reportController = {
   getReports: function(req, res, next) {
     if (req.session && req.session.loggedIn) {
       if (req.isAdmin) {
         var query = {};
-
-        if (!req.query.all) query.process_timestamp = null;
+        var all = sanitizer.value(req.query.name, 'boolean');
+        if (!all) query.process_timestamp = null;
 
         Report.find(query).exec()
         .then(function(documents) {
@@ -19,31 +22,33 @@ const reportController = {
             report.author.display_name = doc.author.display_name;
             return report;
           });
-          res.json({ count: reports.length, reports: reports });
+          //res.json({ count: reports.length, reports: reports });
+          // TODO: make reports view
         })
         .catch(function(reason) {
-          res.status(500).json({ error: {
-            message: "An error occurred.",
-            details: reason
-          }});
+          res.status(500).redirect('/404'); // TODO: redirect to error (not 404) page
+          //res.status(404).redirect('/404');
         });
       } else {
-        res.status(401).json({ error: err.unauthorized("Not an admin account.") });
+        res.status(404).redirect('/404');
       }
     } else {
-      res.status(401).json({ error: err.unauthorized() });
+      res.status(404).redirect('/404');
     }
   },
 
   postReportRecipe: function(req, res, next) {
     if (req.session && req.session.loggedIn) {
+      var category = sanitizer.value(req.body.category, 'string');
+      var reason = sanitizer.value(req.body.reason, 'string');
+
       var recipeId = req.params.id;
       var reportDoc = {
         author: req.session.userId,
         reported_ID: recipeId,
         reported_ref: 'Recipe',
-        category: req.body.category,
-        reason: req.body.reason
+        category: category,
+        reason: reason
       };
       
       Report.create(reportDoc)
@@ -64,13 +69,16 @@ const reportController = {
 
   postReportComment: function(req, res, next) {
     if (req.session && req.session.loggedIn) {
+      var category = sanitizer.value(req.body.category, 'string');
+      var reason = sanitizer.value(req.body.reason, 'string');
+
       var commentId = req.params.cid;
       var reportDoc = {
         author: req.session.userId,
         reported_ID: commentId,
         reported_ref: 'Comment',
-        category: req.body.category,
-        reason: req.body.reason
+        category: category,
+        reason: reason
       };
       
       Report.create(reportDoc)
@@ -100,8 +108,9 @@ const reportController = {
     if (req.session && req.session.loggedIn) {
       if (req.isAdmin) {
         var reportId = req.params.id;
-        var verdict = req.body.verdict;
-        
+        var verdict = sanitizer.value(req.body.verdict, 'string');
+        var ban_until = new Date(sanitizer.value(req.body.ban_until, 'string')); // present when the verdict is ban
+
         // start a delete transaction
         mongoose.startSession()
         .then(async function(session) {
@@ -109,40 +118,56 @@ const reportController = {
           
           Report.findOne(reportId).exec()
           .then(function(report) {
-            if (report.reported_ref == 'Comment') {
-              return Comment.findById(report.reported_ID)
-              .then(function(document) {
-                return { reportInfo: report, reported: document };
-              });
-            } else if (report.reported_ref == 'Recipe') {
-              return Recipe.findById(report.reported_ID)
-              .then(function(document) {
-                return { reportInfo: report, reported: document };
-              });
-            } else {
-              throw Error('Invalid ref type');
-            }
-          })
-          .then(function(result) {
-            var report = result.reportInfo;
-            var reported = result.reported;
-
-            
-          });
-          Recipe.findOne(recipeId).exec()
-          .then(function(recipe) {
-            if (recipe) {
-              if (recipe.author == req.session.userId) {
-                return recipe;
+            if (verdict == 'ignore') {
+              return Report.findByIdAndUpdate(reportId, { process_timestamp: Date.now() }).exec();
+            } else if (verdict == 'ban') {
+              if (report.reported_ref == 'Comment') {
+                return Comment.findOneAndDelete(report.reported_ID).exec()
+                .then((document) => document.author)
+                .then((author) => Profile.updateOne(author, { ban_until: ban_until }));
+              } else if (report.reported_ref == 'Recipe') {
+                return Recipe.findOneAndDelete(report.reported_ID).exec()
+                .then((document) => document.author)
+                .then((author) => Profile.updateOne(author, { ban_until: ban_until }));
               } else {
-                throw Error("Recipe not owned by requestor.");
+                throw Error('Invalid ref type');
               }
-            } else {
-              throw Error("No recipe to delete.");
+            } else if (verdict == 'delete') {
+              var authorId = null;
+              var recipeIds = [];
+              if (report.reported_ref == 'Comment') {
+                return Comment.findOneAndDelete(report.reported_ID).populate('author').exec() // find the offending comment and delete
+                .then((document) => {                                                         // find the offending user
+                  authorId = document.author._id;
+                  return document.author;
+                })
+                .then(() => Profile.findOneAndDelete(authorId))                               // delete the user
+                .then(() => Recipe.find({ author: authorId }))                                // find all the recipes posted by the user
+                .then((recipes) => recipeIds = recipes.map(recipe => recipe._id))             // map them into an array of ObjectId's
+                .then(() => Recipe.deleteMany({ _id: { $in: recipeIds }}))                    // delete those recipes
+                .then(() => Like.deleteMany({ sender: authorId }))                            // delete all the user's likes (not the recipes)
+                .then(() => Like.deleteMany({ recipe: { $in: recipeIds }}))                   // delete all the likes on any of the recipes
+                .then(() => Comment.deleteMany({ author: authorId }))                         // delete all the user's comments
+                .then(() => Comment.deleteMany({ recipe: { $in: recipeIds }}));               // delete all the comments on any of the recipes
+              } else if (report.reported_ref == 'Recipe') {
+                return Recipe.findOneAndDelete(report.reported_ID).populate('author').exec()  // find the offending recipe and delete
+                .then((document) => {                                                         // find the offending user
+                  authorId = document.author._id;
+                  return document.author;
+                })
+                .then(() => Profile.findOneAndDelete(authorId))                               // delete the user
+                .then(() => Recipe.find({ author: authorId }))                                // find all the recipes posted by the user
+                .then((recipes) => recipeIds = recipes.map(recipe => recipe._id))             // map them into an array of ObjectId's
+                .then(() => Recipe.deleteMany({ _id: { $in: recipeIds }}))                    // delete those recipes
+                .then(() => Like.deleteMany({ sender: authorId }))                            // delete all the user's likes (not the recipes)
+                .then(() => Like.deleteMany({ recipe: { $in: recipeIds }}))                   // delete all the likes on any of the recipes
+                .then(() => Comment.deleteMany({ author: authorId }))                         // delete all the user's comments
+                .then(() => Comment.deleteMany({ recipe: { $in: recipeIds }}));               // delete all the comments on any of the recipes
+              } else {
+                throw Error('Invalid ref type');
+              }
             }
           })
-          .then(() => Like.deleteMany({ recipe: recipeId }))
-          .then(() => Comment.deleteMany({ recipe: recipeId }))
           .then(function() {
             session.commitTransaction(function() {
               res.send("Successfully deleted recipe.");
@@ -155,7 +180,7 @@ const reportController = {
           })
           .finally(function() {
             session.endSession();
-          })
+          });
         })
         .catch(function(reason) {
           res.status(500).json({ error: err.generic("Could not process report.", reason) });
