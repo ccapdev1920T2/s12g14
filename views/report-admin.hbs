@@ -1,0 +1,41 @@
+<main>
+  <div class="container">
+    <div id="reports">
+      {{#each reports}}
+      <div class="bg-cstm-orange-lighter p-3 my-2 border border-dark">
+        <div class="row">
+          <h5 class="col-3">Reporting User:</h5>
+          <h5 class="col-9"> {{author_name}} </h5>
+        </div>
+        <div class="row">
+          <h5 class="col-3">Reported Type:</h5>
+          <h5 class="col-9"> {{ref}}} </h5>
+        </div>
+        <div class="row">
+          <h5 class="col-3">Reason Reported:</h5>
+          <h5 class="col-9">{{reason}}</h5>
+        </div>
+        <div class="row">
+          <h5 class="col-3">Timestamp: </h5>
+          <h5 class="col-9">{{timestamp}}</h5>
+        </div>
+        <div class="row">
+          <h5 class="col-3">
+          {{#if recipe}}
+            Recipe Title:
+          {{else}}
+            Comment:
+          {{/if}}
+          </h5>
+          <h5 class="col-9">
+            {{content}}
+          </h5>
+        </div>
+        <div class="row">
+          <a class="h5 ml-3" href="{{link}}">Link to Content</a>
+        </div>
+      </div>  
+      {{/each}}     
+    </div>
+  </div>
+</main>

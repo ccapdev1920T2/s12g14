@@ -17,11 +17,6 @@ var ReportSchema = new mongoose.Schema({
     enum: ['Recipe', 'Comment'],
     required: true
   },
-  category: {
-    type: String,
-    enum: ['sexual','gore','others'],
-    required: true
-  },
   reason: {
     type: String,
     required: true
