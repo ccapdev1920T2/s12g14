@@ -117,7 +117,7 @@ app.get('/', function(req, res, next){
     if (req.session && req.session.loggedIn) {
       params.registered = true;
       params.is_admin = req.session.isAdmin;
-      params.user = req.session.username;
+      params.user = req.session.user;
     }
   
     res.render('index', params);

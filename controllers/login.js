@@ -22,7 +22,19 @@ const loginController = {
           req.session.loggedIn = true;
           req.session.isAdmin = user.is_admin;
           req.session.userId = user._id;
-          req.session.username = username; // TODO: this seems kinda insecure
+          req.session.username = user.username;
+          req.session.lastname = user.lastname;
+          req.session.firstname = user.firstname;
+          req.session.displayName = user.display_name;
+          req.session.pictureLink = user.picture_link;
+          req.session.user = {
+            id: user._id,
+            username: user.username,
+            lastname: user.lastname,
+            firstname: user.firstname,
+            display_name: user.display_name,
+            picture_link: user.picture_link
+          };
           console.log('Weww');
           return res.redirect(req.body['returnUrl'] || '/');
         }

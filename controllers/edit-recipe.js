@@ -12,7 +12,7 @@ const editRecipeController = {
         layout: 'with-nav',
         registered: true,
         is_admin: req.session.isAdmin,
-        user: req.session.username,
+        user: req.session.user,
         class: 'bg-cstm-yellow-lightest',
         title: recipe.name,
         recipe: recipe.toObject(),

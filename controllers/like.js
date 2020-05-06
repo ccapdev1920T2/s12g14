@@ -1,13 +1,14 @@
 const Like = require('../models/like-model');
+const err = require('../errors');
 
 const likeController = {
   postLike: function(req, res, next){
     if (req.session && req.session.loggedIn) {
-      Like.create({ recipe: req.params.id, sender: req.session.userId })
+      Like.create({ recipe: req.params.id, sender: req.session.user.id })
       .then(function(like) {
         // Generic message; use status code to check for success
         if (like) res.send("Success!");
-        else      res.status(400).send("Recipe still not liked");
+        else      res.status(500).send("Recipe still not liked");
       })
       .catch(function(reason) {
         res.status(500).json({ error: {
@@ -53,7 +54,19 @@ const likeController = {
   getLikes: function(req, res, next){
     Like.find({ recipe: req.params.id }).exec()
     .then(function(likes) {
-      res.json({ count: likes.length });  
+      var liked = false;
+      if (req.session && req.session.loggedIn) {
+        for (var i = 0; i < likes.length; i++) {
+          console.log(likes[i].sender);
+          console.log(req.session.user.id);
+          if (likes[i].sender == req.session.user.id) {
+            liked = true;
+            break;
+          }
+        }
+      }
+      
+      res.json({ count: likes.length, liked: liked });  
     })
     .catch(function(reason) {
       res.status(500).json({ error: err.generic("An error occurred.", reason) });

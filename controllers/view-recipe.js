@@ -15,7 +15,7 @@ const viewRecipeController = {
         layout: 'with-nav',
         registered: false,
         class: 'bg-cstm-yellow-lightest',
-        title: recipe.name,
+        title: recipe.name.trim() + ' - Cooker',
         recipe: recipe.toObject(),
         recipeId: req.params.id,
         owned: recipe.author._id == req.session.userId,
@@ -26,40 +26,13 @@ const viewRecipeController = {
       params.author.display_name = recipe.author.display_name;
         
       if (req.session && req.session.loggedIn) {
+        console.log(req.session.user);
         params.registered = true;
         params.is_admin = req.session.isAdmin;
-        params.user = req.session.username;
+        params.user = req.session.user;
       }
-
-      Like.find({ recipe: req.params.id }).populate('sender').exec(function(err, likes) {
-        if (err) return next(err);
-
-        params.like_count = likes.length;
-
-        var liked = false;
-        if (params.registered) {
-          for (var i = 0; i < likes.length; i++) {
-            if (likes[i].sender.username === params.user) {
-              liked = true;
-              break;
-            }
-          }
-        }
-        params.liked = liked;
-
-        Comment.find({ recipe: req.params.id }).populate('author').exec(function(err, comments) {
-          if (err) return next(err);
-
-          params.comments = comments.map(d => {
-            var o = d.toObject();
-            o.author.display_name = d.author.display_name;
-            o.owned = d.author._id == req.session.userId;
-            return o;
-          });
-
-          res.render('view-recipe', params);
-        });
-      });
+      
+      res.render('view-recipe', params);
     });
   }
 }

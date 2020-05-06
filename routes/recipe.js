@@ -40,8 +40,8 @@ router.post('/:id/unlike', likeController.postUnlike);
 
 router.get('/:id/comment', commentController.getComments);
 router.post('/:id/comment', commentController.postCommentNew);
-router.post('/:id/comment/edit', commentController.postCommentEdit);
-router.post('/:id/comment/delete', commentController.postCommentDelete);
+router.post('/:id/comment/:cid/edit', commentController.postCommentEdit);
+router.post('/:id/comment/:cid/delete', commentController.postCommentDelete);
 
 router.get('/:id', viewRecipeController.getRecipe);
 

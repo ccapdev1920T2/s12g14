@@ -6,7 +6,7 @@ const newRecipeController = {
       var params = {
         layout: 'with-nav',
         registered: true,
-        user: req.session.username,
+        user: req.session.user,
         class: 'bg-cstm-yellow-lightest',
         title: 'Create Recipe',
       };

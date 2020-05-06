@@ -7,24 +7,32 @@ const err = require('../errors');
 const deleteRecipeController = {
   postDelete: function(req, res, next){
     if (req.session && req.session.loggedIn) {
-      var recipeId = req.body.id;
+      var recipeId = req.params.id;
   
       // start a delete transaction
       mongoose.startSession()
       .then(async function(session) {
         session.startTransaction();
-        Recipe.findOne(recipeId).exec()
+        Recipe.findById(recipeId).populate("author").exec()
         .then(function(recipe) {
           if (recipe) {
-            if (recipe.author == req.session.userId) {
+            var authId = recipe.author._id;
+            var userId = req.session.user.id;
+            console.log(recipeId);
+            console.log(authId);
+            console.log(userId);
+            if (authId == userId) {
               return recipe;
             } else {
+              console.log("Recipe not owned");
               throw Error("Recipe not owned by requestor.");
             }
           } else {
+            console.log("Recipe not found");
             throw Error("No recipe to delete.");
           }
         })
+        .then(recipe => recipe.remove())
         .then(() => Like.deleteMany({ recipe: recipeId }))
         .then(() => Comment.deleteMany({ recipe: recipeId }))
         .then(function() {

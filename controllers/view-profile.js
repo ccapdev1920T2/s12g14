@@ -39,7 +39,7 @@ const viewProfileController = {
             if (req.session && req.session.loggedIn) {
               params.registered = true;
               params.is_admin = req.session.isAdmin;
-              params.user = req.session.username;
+              params.user = req.session.user;
             }
 
             // get all recipes this user has liked
@@ -82,7 +82,7 @@ const viewProfileController = {
           res.render('profile', {
             layout: 'with-nav',
             registered: true,
-            user: req.session.username,
+            user: req.session.user,
             self: true,
             profile: {
               display: (user.firstname && user.lastname) ? user.firstname + ' ' + user.lastname : user.username,

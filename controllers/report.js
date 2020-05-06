@@ -10,9 +10,9 @@ const sanitizer = require('sanitize')();
 const reportController = {
   getReports: function(req, res, next) {
     if (req.session && req.session.loggedIn) {
-      if (req.isAdmin) {
+      if (req.session.isAdmin) {
         var query = {};
-        var all = sanitizer.value(req.query.name, 'boolean');
+        var all = sanitizer.value(req.query.name, Boolean);
         if (!all) query.process_timestamp = null;
 
         Report.find(query).exec()
@@ -20,12 +20,25 @@ const reportController = {
           var reports = documents.map(doc => {
             var report = doc.toObject();
             report.author.display_name = doc.author.display_name;
+            report.recipe = doc.reported_ref == 'Recipe';
             return report;
           });
           //res.json({ count: reports.length, reports: reports });
           // TODO: make reports view
+          var params = {
+            layout: 'with-nav',
+            registered: true,
+            is_admin: true,
+            user: req.session.user,
+            class: 'bg-cstm-yellow-lightest',
+            title: 'Admin dashboard',
+            reports: reports
+          };
+          
+          res.render("report-admin", params);
         })
         .catch(function(reason) {
+          console.log(reason);
           res.status(500).redirect('/404'); // TODO: redirect to error (not 404) page
           //res.status(404).redirect('/404');
         });
@@ -39,29 +52,35 @@ const reportController = {
 
   postReportRecipe: function(req, res, next) {
     if (req.session && req.session.loggedIn) {
-      var category = sanitizer.value(req.body.category, 'string');
-      var reason = sanitizer.value(req.body.reason, 'string');
+      var reason = sanitizer.value(req.body.reason, String);
+      console.log("Reason is: " + reason);
 
       var recipeId = req.params.id;
       var reportDoc = {
-        author: req.session.userId,
+        author: req.session.user.id,
         reported_ID: recipeId,
         reported_ref: 'Recipe',
-        category: category,
         reason: reason
       };
-      
-      Report.create(reportDoc)
-      .then(function(document) {
-        if (like) res.send("Success!");
-        else      res.status(400).send("Recipe not reported");
-      })
-      .catch(function(reason) {
-        res.status(500).json({ error: {
-          message: "An error occurred.",
-          details: reason
-        }});
+      console.log(reportDoc);
+      Report.create(reportDoc, function(error, docs) {
+        if (error) {
+          res.status(500).json({ error: err.generic("An error occurred.", error) });
+        } else {
+          res.send("Success!");
+        }
       });
+      //.then(function(document) {
+      //  if (like) res.send("Success!");
+      //  else      res.status(400).send("Recipe not reported");
+      //})
+      //.catch(function(reason) {
+      //  res.status(500).json({ error: {
+      //    message: "An error occurred.",
+      //    details: reason
+      //  }});
+      //});
+
     } else {
       res.status(401).json({ error: err.unauthorized() });
     }
@@ -69,15 +88,13 @@ const reportController = {
 
   postReportComment: function(req, res, next) {
     if (req.session && req.session.loggedIn) {
-      var category = sanitizer.value(req.body.category, 'string');
-      var reason = sanitizer.value(req.body.reason, 'string');
+      var reason = sanitizer.value(req.body.reason, String);
 
       var commentId = req.params.cid;
       var reportDoc = {
-        author: req.session.userId,
+        author: req.session.user.id,
         reported_ID: commentId,
         reported_ref: 'Comment',
-        category: category,
         reason: reason
       };
       
@@ -106,7 +123,7 @@ const reportController = {
   //            is permanently banned
   postProcessReport: function(req, res, next) {
     if (req.session && req.session.loggedIn) {
-      if (req.isAdmin) {
+      if (req.session.isAdmin) {
         var reportId = req.params.id;
         var verdict = sanitizer.value(req.body.verdict, 'string');
         var ban_until = new Date(sanitizer.value(req.body.ban_until, 'string')); // present when the verdict is ban

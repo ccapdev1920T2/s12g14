@@ -13,7 +13,7 @@ const editProfileController = {
             layout: 'with-nav',
             registered: true,
             is_admin: req.session.isAdmin,
-            user: req.session.username,
+            user: req.session.user,
             self: true,
             profile: {
               display: (user.firstname && user.lastname) ? user.firstname + ' ' + user.lastname : user.username,

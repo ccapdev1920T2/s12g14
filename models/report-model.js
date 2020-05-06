@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ReportSchema = new mongoose.Schema({
-  _id: Schema.Types.ObjectId,
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -28,6 +27,7 @@ var ReportSchema = new mongoose.Schema({
   },
   process_timestamp: {
     type : Date,
+    default: null,
     required: false
   }
 })

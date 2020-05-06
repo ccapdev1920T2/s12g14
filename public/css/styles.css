@@ -56,4 +56,28 @@ a:hover, a:visited, a:link, a:active .no-hover {
 
 #registered-like {
   cursor: pointer;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+#edit-recipe {
+  cursor: pointer;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+#delete-recipe {
+  cursor: pointer;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+#report-recipe {
+  cursor: pointer;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+#report-text {
+  width: 100%;
 }

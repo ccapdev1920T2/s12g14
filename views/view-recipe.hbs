@@ -16,16 +16,13 @@
         <div id="recipe-interactions" class="my-3">
           <h5 class="float-left"><span id="like-count"></span> like(s)</h5>
           {{#if registered}}
-            {{#if liked}}
-            <span class="float-right"><a id="registered-like" class="text-dark liked">Unlike this recipe</a></span>
-            {{else}}
-            <span class="float-right"><a id="registered-like" class="text-dark">Like this recipe!</a></span>
-            {{/if}}
             {{#if owned}}
-            <form action="/recipe/{{recipeId}}/delete" method="POST">
-              <button type="submit">Delete</button>
-            </form>
+            <a class="text-dark float-right" id="delete-recipe">Delete</a>
+            <a class="text-dark float-right mr-2" id="edit-recipe">Edit</a>
+            {{else}}
+            <a class="text-dark float-right" id="report-recipe" data-toggle="modal" data-target="#report-modal">Report</a>
             {{/if}}
+            <span class="float-right"><a id="registered-like" class="text-dark mr-2"></a></span>
           {{else}}
           <span class="float-right"><a id="unregistered-like" class="text-dark" href="/login?returnUrl={{url}}">Register to like recipes!</a></span>
           {{/if}}
@@ -76,9 +73,9 @@
           {{#if registered}}
           <div class="row bg-cstm-orange-lighter my-2 px-2 pt-2 pb-4">
             <div class="col-2">
-              <a href="/profile/{{author.username}}" class="text-dark">{{author.display_name}}</a>
-              <a href="/profile/{{author.username}}">
-                <img id="profile-img-1" src="{{author.picture_link}}" class="rounded img-fluid">
+              <a href="/profile/{{user.username}}" class="text-dark">{{user.display_name}}</a>
+              <a href="/profile/{{user.username}}">
+                <img id="profile-img-1" src="{{user.picture_link}}" class="rounded img-fluid">
               </a>
             </div>
             <div class="col-10">
@@ -94,9 +91,38 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="modal fade" id="report-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Report <span class="report-type"></span></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <span class="d-none" id="reported-id"></span>
+          <span class="d-none" id="reported-type"></span>
+          <h3>Why is this <span class="report-type"></span> being reported?</h3>
+          <textarea id="report-text" rows="7" placeholder="State your reason here"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-cstm-orange" id="report-confirm">Report</button>
+          <button type="button" class="btn btn-cstm-yellow-lightest" id="report-cancel" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script>
+  var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+  function formatDate(date) {
+    return date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear() + ", " +
+      date.getHours() + ":" + date.getMinutes();
+  }
+
   function appendComment(recipeId, comment) {
     var commentsTag = $("#comments");
     var author = comment.author;
@@ -108,26 +134,23 @@
     html += '<a href="/profile/' + author.username + '"><img id="profile-img-1" src="' + author.picture_link + '" class="rounded img-fluid"></a>';
     html += '</div>';
     html += '<div class="col-10">';
-    html += '<span class="float-right">' + comment.timestamp + '</span>'; // TODO: make timestamp readable
-    html += '<div class="mb-3 mt-4" style="min-height: 100px;">' + comment.text + '</div>';
+    html += '<span class="float-right">' + formatDate(new Date(comment.timestamp)) + '</span>'; // TODO: make timestamp readable
+    html += '<div class="mb-3 mt-4 comment-text" style="min-height: 100px;">' + comment.text + '</div>';
     {{#if registered}}
-    if (!comment.owned) html += '<button type="button" class="btn float-right border-0 bg-cstm-orange"><span style="font-size: 12px;" class="fa fa-flag"></span>  Report</button>';
+    if (!comment.owned) html += '<div class="comment-actions"><button type="button" class="btn float-right border-0 bg-cstm-orange report-comment" data-toggle="modal" data-target="#report-modal"><span style="font-size: 12px;" class="fa fa-flag"></span>  Report</button></div>';
     else {
-      html += '<form action="/recipe/' + recipeId + '/comment/edit" method="POST">';
-      html += '<div class="form-group">';
-      html += '<input type="text" class="d-none form-control" name="id" value="' + comment._id + '">';
-      html += '<textarea class="form-control" name="text"></textarea>';
-      html += '<button class="float-left btn btn-cstm-orange-darker mt-3" type="submit">Edit</button>';
+      html += '<div class="comment-edit-area" style="display: none">';
+      html += '<textarea class="form-control edit-comment-box" name="text"></textarea>';
+      html += '<button class="float-left btn btn-cstm-orange-darker mt-3 edit-comment-commit mr-2" type="submit">Edit</button>';
+      html += '<button class="float-left btn btn-cstm-orange-darker mt-3 edit-comment-cancel" type="submit">Cancel</button>';
       html += '</div>';
-      html += '</form>';
-      html += '<form action="/recipe/' + recipeId + '/comment/delete" method="POST">';
-      html += '<div class="form-group">';
-      html += '<input type="text" class="d-none form-control" name="id" value="' + comment._id + '">';
-      html += '<button class="float-left ml-2 btn btn-cstm-orange-darker" type="submit">Delete</button>';
+      html += '<div class="alert" id="report-alert" style="display: none" role="alert">';
+      html += 'Successfully reported!';
       html += '</div>';
-      html += '</form>';
-      html += '<button type="button" class="btn float-right border-0 bg-cstm-orange"><span style="font-size: 12px;" class="fa fa-edit"></span>  Edit</button>';
-      html += '<button type="button" class="btn float-right border-0 bg-cstm-orange"><span style="font-size: 12px;" class="fa fa-delete"></span>  Delete</button>';
+      html += '<div class="comment-actions">';
+      html += '<button type="button" class="btn float-right border-0 bg-cstm-orange delete-comment"><span style="font-size: 12px;" class="fa fa-delete"></span>  Delete</button>';
+      html += '<button type="button" class="btn float-right border-0 bg-cstm-orange edit-comment mr-2"><span style="font-size: 12px;" class="fa fa-edit"></span>  Edit</button>';
+      html += '</div>';
     }
     {{/if}}
     html += '</div>';
@@ -146,9 +169,12 @@
     var recipeId = pathname.split('/')[1];
 
     function updateLikes() {
+      var like = $("#registered-like");
       $.get("/recipe/" + recipeId + "/likes", function(data, status, res) {
         if (res.status == 200) {
           $("#like-count").text(data.count);
+          if (data.liked) { like.addClass("liked"); like.text("Unlike this recipe"); }
+          else            { like.removeClass("liked"); like.text("Like this recipe!"); }
         } else {
           // TODO: report error message
         }
@@ -161,7 +187,6 @@
         $.post('/recipe/' + recipeId + '/unlike', function(data, status, res) {
           if (res.status == 200) {
             updateLikes();
-            self.removeClass("liked").text("Like this recipe!");
           } else {
             // TODO: display error
           }
@@ -170,7 +195,6 @@
         $.post('/recipe/' + recipeId + '/like', function(data, status, res) {
           if (res.status == 200) {
             updateLikes();
-            self.addClass("liked").text("Unlike this recipe");
           } else {
             // TODO: display error
           }
@@ -179,7 +203,109 @@
     });
 
     $("#new-comment").click(function() {
+      var data = { text: $("#new-comment-box").val() };
+      $.post('/recipe/' + recipeId + '/comment', data, function(data, status, res) {
+        if (res.status == 200) {
+          $("#new-comment-box").val('');
+          appendComment(recipeId, data);
+          $("html, body").animate({
+            scrollTop: $("#" + data._id).offset().top
+          }, 250);
+        } else {
+          // TODO: modal to show error
+        }
+      });
+    });
 
+    $("#comments").on("click", ".edit-comment", function() {
+      var root = $(this).parent().parent();
+      var text = root.find(".comment-text").text();
+      root.find(".edit-comment-box").text(text);
+      root.find(".comment-edit-area").show();
+      $(this).parent().hide();
+    });
+
+    $("#comments").on("click", ".edit-comment-cancel", function() {
+      var root = $(this).parent().parent();
+      root.find(".edit-comment-box").val('');
+      $(this).parent().show();
+      root.find(".comment-edit-area").hide();
+    });
+
+    $("#comments").on("click", ".edit-comment-commit", function() {
+      var root = $(this).parent().parent();
+      var actions = root.find(".comment-actions");
+      var id = root.parent().attr("id");
+      var data = { text: root.find(".edit-comment-box").val() };
+      $.post('/recipe/' + recipeId + '/comment/' + id + '/edit', data, function(data, status, res) {
+        if (res.status == 200) {
+          actions.show();
+          root.find(".comment-edit-area").hide();
+          root.find(".edit-comment-box").val('');
+          root.find(".comment-text").text(data.text);
+        } else {
+          // TODO: modal to show error
+        }
+      });
+    });
+
+    $("#comments").on("click", ".delete-comment", function() {
+      var root = $(this).parent().parent().parent();
+      var id = root.attr("id");
+      $.post('/recipe/' + recipeId + '/comment/' + id + '/delete', function(data, status, res) {
+        if (res.status == 200) {
+          root.remove();
+        } else {
+          // TODO: modal to show error
+        }
+      });
+    });
+
+    $("#comments").on("click", ".report-comment", function() {
+      // TODO: report modal
+      $("#reported-id").text($(this).parent().parent().parent().attr('id'));
+      $("#reported-type").text("comment");
+      $(".report-type").text("comment");
+    });
+
+    $("#report-recipe").click(function() {
+      // TODO: report modal
+      $("#reported-id").text("{{recipe._id}}");
+      $("#reported-type").text("recipe");
+      $(".report-type").text("recipe");
+    });
+
+    $("#report-confirm").click(function() {
+      var type = $("#reported-type").text();
+      var id = $("#reported-id").text();
+      var data = { reason: $("#report-text").val() };
+      if (type == 'recipe') {
+        $.post("/recipe/{{recipe._id}}/report", data, function(data, status, res) {
+          if (res.status == 200) {
+            $("#recipe-alert").removeClass("alert-failure").addClass("alert-success").text("Successfully reported!").show();
+            setTimeout(function() {
+              $("#recipe-modal").modal({ show: false });
+              $("#recipe-alert").removeClass("alert-success").text("").hide();
+            }, 1000);
+          } else {
+            $("#recipe-alert").addClass("alert-failure").text("Something went wrong. Please try again.").show();
+          }
+        });
+      } else if (type == 'comment') {
+        $.post("/recipe/{{recipe._id}}/comment/" + $("#reported-id").text() + "/report", data, function(data, status, res) {
+          if (res.status == 200) {
+            $("#recipe-alert").removeClass("alert-failure").addClass("alert-success").text("Successfully reported!").show();
+            setTimeout(function() {
+              $("#recipe-modal").modal({ show: false });
+              $("#recipe-alert").removeClass("alert-success").text().hide();
+            }, 1000);
+          } else {
+            $("#recipe-alert").addClass("alert-failure").text("Something went wrong. Please try again.").show();
+          }
+        });
+      } else {
+        $("#recipe-alert").addClass("alert-failure").text("Something went wrong. Please try again.").show();
+      }
     });
 
     $.get("/recipe/" + recipeId + "/comment", function(data, status, res) {
@@ -192,7 +318,7 @@
           $("#comments").append('<div class="text-center" id="comments-none"><h4>No comments yet!</h4></div>');
         }
       } else {
-          $("#comments").append('<div class="text-center" id="comments-error"><h4>Looks like something went wrong while getting the comments.</h4></div>');
+        $("#comments").append('<div class="text-center" id="comments-error"><h4>Looks like something went wrong while getting the comments.</h4></div>');
       }
     });
 
