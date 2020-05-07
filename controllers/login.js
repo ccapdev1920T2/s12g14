@@ -11,11 +11,9 @@ const loginController = {
   postLogin: function(req, res, next){
     var username = req.body['username'];
     var password = req.body['password'];
-    console.log('User "' + username + '" attempted to log in with passcode ' + password); 
     if (username && password) {
       Profile.authenticate(username, password, function(err, user) {
         if (err) {
-          console.log('Wew');
           res.render('login', {loginError: 'Invalid username/password.'});
         }
         else {
@@ -35,12 +33,10 @@ const loginController = {
             display_name: user.display_name,
             picture_link: user.picture_link
           };
-          console.log('Weww');
           return res.redirect(req.body['returnUrl'] || '/');
         }
       });
     } else {
-      console.log("wewrs");
       res.render('login', {loginError: 'Username/password cannot be empty.'});
     }
   }

@@ -18,17 +18,12 @@ const deleteRecipeController = {
           if (recipe) {
             var authId = recipe.author._id;
             var userId = req.session.user.id;
-            console.log(recipeId);
-            console.log(authId);
-            console.log(userId);
             if (authId == userId) {
               return recipe;
             } else {
-              console.log("Recipe not owned");
               throw Error("Recipe not owned by requestor.");
             }
           } else {
-            console.log("Recipe not found");
             throw Error("No recipe to delete.");
           }
         })

@@ -87,8 +87,8 @@ UserSchema.post("find", function(docs) {
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 UserSchema.statics.authenticate = function(usernameOrEmail, password, callback) {
   var query = {};
-  if (emailRegex.test(usernameOrEmail)) query.email = usernameOrEmail;
-  else                                  query.username = usernameOrEmail;
+  if (emailRegex.test(usernameOrEmail)) query.email    = { $regex: new RegExp('^' + usernameOrEmail + '$', 'i') };
+  else                                  query.username = { $regex: new RegExp('^' + usernameOrEmail + '$', 'i') };
   
   User.findOne(query).exec(function(err, user) {
     if (err) {
@@ -99,8 +99,14 @@ UserSchema.statics.authenticate = function(usernameOrEmail, password, callback) 
       return callback(err);
     }
     bcrypt.compare(password, user.pass_encrypted, function(err, result) {
-      if (result) return callback(null, user);
-      else {
+      if (result) {
+        if (user.ban_until) {
+          var now = Date.now();
+          var ban = user.ban_until.getTime();
+          if (ban > now) return callback(new Error('User is banned until ' + new Date(ban)));
+        }
+        return callback(null, user);
+      } else {
         var err = new Error('Username/password invalid.');
         err.status = 401;
         return callback(err);

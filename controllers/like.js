@@ -57,8 +57,6 @@ const likeController = {
       var liked = false;
       if (req.session && req.session.loggedIn) {
         for (var i = 0; i < likes.length; i++) {
-          console.log(likes[i].sender);
-          console.log(req.session.user.id);
           if (likes[i].sender == req.session.user.id) {
             liked = true;
             break;

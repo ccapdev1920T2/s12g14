@@ -26,7 +26,6 @@ const viewRecipeController = {
       params.author.display_name = recipe.author.display_name;
         
       if (req.session && req.session.loggedIn) {
-        console.log(req.session.user);
         params.registered = true;
         params.is_admin = req.session.isAdmin;
         params.user = req.session.user;

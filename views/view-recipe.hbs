@@ -64,12 +64,9 @@
       <div class="col">
         <h1 id="comments-header">Comments:</h1>
         <div id="comments">
-          {{#if comments}}
-          {{else}}
-            <div class="text-center">
-              <h4>No comments yet!</h4>
-            </div>
-          {{/if}}
+          <div class="text-center" id="comments-none">
+            <h4>No comments yet!</h4>
+          </div>
           {{#if registered}}
           <div class="row bg-cstm-orange-lighter my-2 px-2 pt-2 pb-4">
             <div class="col-2">
@@ -128,7 +125,7 @@
     var author = comment.author;
 
     var html = '';
-    html += '<div class="row bg-cstm-orange-lighter my-2 px-2 pt-2 pb-4" id="' + comment._id + '">';
+    html += '<div class="row bg-cstm-orange-lighter my-2 px-2 pt-2 pb-4 comment" id="' + comment._id + '">';
     html += '<div class="col-2">';
     html += '<a href="/profile/' + author.username + '" class="text-dark">' + author.display_name + '</a>';
     html += '<a href="/profile/' + author.username + '"><img id="profile-img-1" src="' + author.picture_link + '" class="rounded img-fluid"></a>';
@@ -181,6 +178,14 @@
       });
     }
 
+    function updateComments() {
+      if ($("#comments").find(".comment").length == 0) {
+        $("#comments-none").show();
+      } else {
+        $("#comments-none").hide();
+      }
+    }
+
     $("#registered-like").click(function() {
       var self = $(this);
       if (self.hasClass("liked")) {
@@ -208,6 +213,7 @@
         if (res.status == 200) {
           $("#new-comment-box").val('');
           appendComment(recipeId, data);
+          updateComments();
           $("html, body").animate({
             scrollTop: $("#" + data._id).offset().top
           }, 250);
@@ -255,6 +261,7 @@
       $.post('/recipe/' + recipeId + '/comment/' + id + '/delete', function(data, status, res) {
         if (res.status == 200) {
           root.remove();
+          updateComments();
         } else {
           // TODO: modal to show error
         }
@@ -282,29 +289,29 @@
       if (type == 'recipe') {
         $.post("/recipe/{{recipe._id}}/report", data, function(data, status, res) {
           if (res.status == 200) {
-            $("#recipe-alert").removeClass("alert-failure").addClass("alert-success").text("Successfully reported!").show();
+            $("#report-alert").removeClass("alert-failure").addClass("alert-success").text("Successfully reported!").show();
             setTimeout(function() {
-              $("#recipe-modal").modal({ show: false });
-              $("#recipe-alert").removeClass("alert-success").text("").hide();
+              $("#report-modal").modal('toggle');
+              $("#report-alert").removeClass("alert-success").text("").hide();
             }, 1000);
           } else {
-            $("#recipe-alert").addClass("alert-failure").text("Something went wrong. Please try again.").show();
+            $("#report-alert").addClass("alert-failure").text("Something went wrong. Please try again.").show();
           }
         });
       } else if (type == 'comment') {
         $.post("/recipe/{{recipe._id}}/comment/" + $("#reported-id").text() + "/report", data, function(data, status, res) {
           if (res.status == 200) {
-            $("#recipe-alert").removeClass("alert-failure").addClass("alert-success").text("Successfully reported!").show();
+            $("#report-alert").removeClass("alert-failure").addClass("alert-success").text("Successfully reported!").show();
             setTimeout(function() {
-              $("#recipe-modal").modal({ show: false });
-              $("#recipe-alert").removeClass("alert-success").text().hide();
+              $("#report-modal").modal('toggle');
+              $("#report-alert").removeClass("alert-success").text().hide();
             }, 1000);
           } else {
-            $("#recipe-alert").addClass("alert-failure").text("Something went wrong. Please try again.").show();
+            $("#report-alert").addClass("alert-failure").text("Something went wrong. Please try again.").show();
           }
         });
       } else {
-        $("#recipe-alert").addClass("alert-failure").text("Something went wrong. Please try again.").show();
+        $("#report-alert").addClass("alert-failure").text("Something went wrong. Please try again.").show();
       }
     });
 
@@ -323,5 +330,6 @@
     });
 
     updateLikes();
+    updateComments();
   });
 </script>
