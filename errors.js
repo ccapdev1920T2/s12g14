@@ -11,6 +11,8 @@ const errors = {
 
   // Thrown when a protected endpoint receives a request without a valid session.
   UNAUTHORIZED: "UNAUTHORIZED",
+  // Thrown when a banned user attempts to log in.
+  FORBIDDEN: "FORBIDDEN",
 
   // Thrown when the resource to be operated upon or searched is not present.
   NOT_FOUND: "NOT_FOUND",
@@ -36,6 +38,9 @@ const errors = {
   },
   unauthorized: function(message, details) {
     return this.create(this.UNAUTHORIZED, message || "Not logged in.", details);
+  },
+  forbidden: function(message, details) {
+    return this.create(this.FORBIDDEN, message || "User is banned.", details);
   },
   notFound: function(message, details) {
     return this.create(this.NOT_FOUND, message || "Resource not found.", details);

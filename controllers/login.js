@@ -14,7 +14,7 @@ const loginController = {
     if (username && password) {
       Profile.authenticate(username, password, function(err, user) {
         if (err) {
-          res.render('login', {loginError: 'Invalid username/password.'});
+          res.render('login', {loginError: err.message});
         }
         else {
           req.session.loggedIn = true;
@@ -37,7 +37,9 @@ const loginController = {
         }
       });
     } else {
-      res.render('login', {loginError: 'Username/password cannot be empty.'});
+      res.render('login', {
+        loginError: 'Please provide a username and/or password.'
+      });
     }
   }
 }

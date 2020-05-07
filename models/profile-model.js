@@ -7,6 +7,8 @@ const Like = require('./report-model');
 const Comment = require('./comment-model');
 const Report = require('./report-model');
 
+const err = require('../errors');
+
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -90,26 +92,27 @@ UserSchema.statics.authenticate = function(usernameOrEmail, password, callback) 
   if (emailRegex.test(usernameOrEmail)) query.email    = { $regex: new RegExp('^' + usernameOrEmail + '$', 'i') };
   else                                  query.username = { $regex: new RegExp('^' + usernameOrEmail + '$', 'i') };
   
-  User.findOne(query).exec(function(err, user) {
-    if (err) {
-      return callback(err);
+  User.findOne(query).exec(function(error, user) {
+    console.log(error);
+    if (error) {
+      return callback(error);
     } else if (!user) {
-      var err = new Error('Username/password invalid.');
-      err.status = 401;
-      return callback(err);
+      var error = err.unauthorized("Invalid username/password.");
+      error.status = 401;
+      return callback(error);
     }
-    bcrypt.compare(password, user.pass_encrypted, function(err, result) {
+    bcrypt.compare(password, user.pass_encrypted, function(_, result) {
       if (result) {
         if (user.ban_until) {
           var now = Date.now();
           var ban = user.ban_until.getTime();
-          if (ban > now) return callback(new Error('User is banned until ' + new Date(ban)));
+          if (ban > now) return callback(err.forbidden("You are banned until " + new Date(ban).toString(), ban));
         }
         return callback(null, user);
       } else {
-        var err = new Error('Username/password invalid.');
-        err.status = 401;
-        return callback(err);
+        var error = err.unauthorized("Invalid username/password.");
+        error.status = 401;
+        return callback(error);
       }
     });
   });

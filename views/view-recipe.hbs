@@ -116,8 +116,9 @@
 <script>
   var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
   function formatDate(date) {
+    var mins = date.getMinutes();
     return date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear() + ", " +
-      date.getHours() + ":" + date.getMinutes();
+      date.getHours() + ":" + (mins < 10 ? '0' : '') + mins;
   }
 
   function appendComment(recipeId, comment) {
@@ -321,8 +322,6 @@
           for (var i = 0; i < data.count; i++) {
             appendComment(recipeId, data.comments[i]);
           }
-        } else {
-          $("#comments").append('<div class="text-center" id="comments-none"><h4>No comments yet!</h4></div>');
         }
       } else {
         $("#comments").append('<div class="text-center" id="comments-error"><h4>Looks like something went wrong while getting the comments.</h4></div>');
@@ -331,5 +330,11 @@
 
     updateLikes();
     updateComments();
+
+    if (window.location.hash) {
+      $("html, body").animate({
+        scrollTop: $(window.location.hash).offset().top
+      }, 250);
+    }
   });
 </script>

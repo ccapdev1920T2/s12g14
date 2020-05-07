@@ -150,16 +150,12 @@ const reportController = {
         reason: reason
       };
       
-      Report.create(reportDoc)
-      .then(function(document) {
-        if (like) res.send("Success!");
-        else      res.status(400).send("Recipe not reported");
-      })
-      .catch(function(reason) {
-        res.status(500).json({ error: {
-          message: "An error occurred.",
-          details: reason
-        }});
+      Report.create(reportDoc, function(error, docs) {
+        if (error) {
+          res.status(500).json({ error: err.generic("An error occurred.", error) });
+        } else {
+          res.send("Success!");
+        }
       });
     } else {
       res.status(401).json({ error: err.unauthorized() });
@@ -193,12 +189,12 @@ const reportController = {
               return Report.findByIdAndUpdate(reportId, { process_timestamp: Date.now() }).exec();
             } else if (verdict == 'ban') {
               if (report.reported_ref == 'Comment') {
-                return Comment.findByIdAndDelete(report.reported_ID).populate("author").exec()
-                .then((document) => document.author)
+                return Comment.findByIdAndDelete(report.reported_ID).exec()
+                .then((document) => Profile.findById(document.author))
                 .then((author) => Profile.updateOne({ _id: author._id }, { ban_until: ban_until }));
               } else if (report.reported_ref == 'Recipe') {
-                return Recipe.findByIdAndDelete(report.reported_ID).populate("author").exec()
-                .then((document) => document.author)
+                return Recipe.findByIdAndDelete(report.reported_ID).exec()
+                .then((document) => Profile.findById(document.author))
                 .then((author) => Profile.update({ _id: author._id }, { ban_until: ban_until }));
               } else {
                 throw Error('Invalid ref type');
