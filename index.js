@@ -7,12 +7,11 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
 const bodyParser = require('body-parser');
-const multer = require('multer');
-const upload = multer({ dest: 'uploads' })
 
 const path = require('path');
 
 const databaseUrl = process.env.DATABASE || "mongodb://localhost:27017/cookerdb";
+const inMemory = process.env.MEMORY;
 
 const database = require('./database');
 const dbinit = require('./dbinit');
@@ -42,6 +41,10 @@ Handlebars.registerHelper("split_fours", function(array, options) {
     result += options.fn(subArray, options);
   }
   return result;
+});
+
+Handlebars.registerHelper("stringify", function(argument) {
+  return JSON.stringify(argument);
 });
 
 app.engine('hbs', exphbs({
@@ -97,7 +100,7 @@ app.get('/404', function(req, res){
   if (req.session && req.session.loggedIn) {
     params.registered = true;
     params.is_admin = req.session.isAdmin;
-    params.user = req.session.username;
+    params.user = req.session.user.username;
   }
 
   res.render('404', params);

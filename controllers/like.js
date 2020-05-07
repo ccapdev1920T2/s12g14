@@ -23,7 +23,7 @@ const likeController = {
 
   postUnlike: function(req, res, next){
     if (req.session && req.session.loggedIn) {
-      Like.deleteOne({ recipe: req.params.id, sender: req.session.userId }).exec()
+      Like.deleteOne({ recipe: req.params.id, sender: req.session.user.id }).exec()
       .then(function(result) {
         if (result.ok) {
           if (result.n == 0) res.status(400).send({ error: "Recipe not liked. " });
@@ -41,14 +41,6 @@ const likeController = {
     } else {
       res.status(401).json({ error: err.unauthorized() });
     }
-    // if (req.session && req.session.loggedIn) {
-    //   Like.deleteOne({ recipe: req.params.id, sender: req.session.userId }, function(err) {
-    //     if (err)  return next(err);
-    //     else      return res.redirect('/recipe/' + req.params.id);
-    //   });
-    // } else {
-    //   res.redirect('/login');
-    // }
   },
 
   getLikes: function(req, res, next){

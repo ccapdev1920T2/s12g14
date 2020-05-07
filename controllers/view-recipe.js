@@ -1,7 +1,4 @@
 const Recipe = require('../models/recipe-model');
-const Like = require('../models/like-model');
-const Comment = require('../models/comment-model');
-const err = require('../errors');
 const sanitize = require('sanitize-html');
 
 const viewRecipeController = {
@@ -18,7 +15,7 @@ const viewRecipeController = {
         title: recipe.name.trim() + ' - Cooker',
         recipe: recipe.toObject(),
         recipeId: req.params.id,
-        owned: recipe.author._id == req.session.userId,
+        owned: req.session && req.session.loggedIn && recipe.author._id == req.session.user.id,
         author: recipe.author.toObject(),
         url: sanitize("/recipe/" + req.params.id)
       };

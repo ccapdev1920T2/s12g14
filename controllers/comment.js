@@ -10,7 +10,7 @@ const commentController = {
       var comments = documents.map(doc => {
         var comment = doc.toObject();
         comment.author.display_name = doc.author.display_name;
-        comment.owned = req.session && (doc.author._id == req.session.userId);
+        comment.owned = req.session && req.session.loggedIn && (doc.author._id == req.session.user.id);
         comment.text = sanitize(comment.text);
         return comment;
       });
@@ -24,7 +24,7 @@ const commentController = {
   postCommentNew: function(req, res, next){
     if (req.session && req.session.loggedIn) {
       var text = sanitize(req.body.text, 'string');
-      Comment.create({ text: text, recipe: req.params.id, author: req.session.userId })
+      Comment.create({ text: text, recipe: req.params.id, author: req.session.user.id })
       .then(function(document) {
         var comment = document.toObject();
         comment.author = {
@@ -89,7 +89,7 @@ const commentController = {
       var recipeId = req.params.id;
       var commentId = req.params.cid;
   
-      Comment.deleteOne({ _id: commentId, recipe: recipeId, author: req.session.userId }).exec()
+      Comment.deleteOne({ _id: commentId, recipe: recipeId, author: req.session.user.id }).exec()
       .then(function(result) {
         res.send("Successfully deleted comment.");
       })

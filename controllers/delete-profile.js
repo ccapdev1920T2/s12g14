@@ -8,10 +8,14 @@ const err = require('../errors');
 const deleteProfileController = {
   getDelete: function(req, res) {
     if (req.session && req.session.loggedIn) {
-      res.render('delete-account', {
-        title: 'Delete Profile',
-        class: 'bg-cstm-yellow-lightest',
-      });
+      if (req.session.isAdmin) {
+        res.redirect('/404'); // TODO: show error message (can't delete admin)
+      } else {
+        res.render('delete-account', {
+          title: 'Delete Profile',
+          class: 'bg-cstm-yellow-lightest',
+        });
+      }
     } else {
       res.redirect('/login');
     }

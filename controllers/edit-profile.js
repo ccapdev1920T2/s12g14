@@ -3,7 +3,7 @@ const Profile = require('../models/profile-model');
 const editProfileController = {
   getEdit: function(req, res){
     if (req.session && req.session.loggedIn) {
-      Profile.findOne({ username: req.session.username }).exec(function(err, user) {
+      Profile.findById(req.session.user.id).exec(function(err, user) {
         if (err) {
           return next(err);
         } else if (!user) {
@@ -16,9 +16,9 @@ const editProfileController = {
             user: req.session.user,
             self: true,
             profile: {
-              display: (user.firstname && user.lastname) ? user.firstname + ' ' + user.lastname : user.username,
+              firstname: user.firstname,
+              lastname: user.lastname,
               bio: user.bio,
-              join_date: user.join_date,
               picture_link: user.picture_link
             },
             class: 'bg-cstm-yellow-lightest',
@@ -31,7 +31,7 @@ const editProfileController = {
     }
   },
 
-  postEdit: function(res, res){
+  postEdit: function(req, res){
     if (req.session && req.session.loggedIn) {
       var firstname = req.body.firstname;
       var lastname = req.body.lastname;
@@ -46,9 +46,15 @@ const editProfileController = {
       };
       if (display) delta.picture_link = '/uploads/' + display.filename;
   
-      Profile.update({ username: req.session.username }, delta, function(err) {
+      Profile.findByIdAndUpdate(req.session.user.id, delta, { new: true }, function(err, data) {
         if (err)  return next(err);
-        else      return res.redirect('/profile');
+        else {
+          req.session.user.firstname = data.firstname;
+          req.session.user.lastname = data.lastname;
+          req.session.user.display_name = data.display_name;
+          req.session.user.picture_link = data.picture_link;
+          return res.redirect('/profile');
+        }
       });
     } else {
       return res.redirect('/login');

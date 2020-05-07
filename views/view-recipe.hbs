@@ -17,8 +17,8 @@
           <h5 class="float-left"><span id="like-count"></span> like(s)</h5>
           {{#if registered}}
             {{#if owned}}
-            <a class="text-dark float-right" id="delete-recipe">Delete</a>
-            <a class="text-dark float-right mr-2" id="edit-recipe">Edit</a>
+            <a class="text-dark float-right" id="delete-recipe" data-toggle="modal" data-target="#delete-modal">Delete</a>
+            <a class="text-dark float-right mr-2" href="/recipe/{{recipe._id}}/edit" id="edit-recipe">Edit</a>
             {{else}}
             <a class="text-dark float-right" id="report-recipe" data-toggle="modal" data-target="#report-modal">Report</a>
             {{/if}}
@@ -107,6 +107,25 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-cstm-orange" id="report-confirm">Report</button>
           <button type="button" class="btn btn-cstm-yellow-lightest" id="report-cancel" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete recipe</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3>Deleting this recipe cannot be undone!</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="delete-confirm">Delete</button>
+          <button type="button" class="btn btn-cstm-yellow-lightest" id="delete-cancel" data-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>
@@ -314,6 +333,16 @@
       } else {
         $("#report-alert").addClass("alert-failure").text("Something went wrong. Please try again.").show();
       }
+    });
+
+    $("#delete-confirm").click(function() {
+      $.post("/recipe/{{recipe._id}}/delete", function(data, status, res) {
+        if (res.status == 200) {
+          window.location.href = "/"; // go back to index
+        } else {
+          // TODO: show error
+        }
+      });
     });
 
     $.get("/recipe/" + recipeId + "/comment", function(data, status, res) {

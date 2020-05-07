@@ -109,12 +109,12 @@ $(document).ready(function() {
   $('.input-bio').on("keyup", validateBio);
 
   $("#next").click(function() {
-    $("#register-basic").hide();
-    $("#register-bio").show();
+    $("#register-basic").removeClass("current").hide();
+    $("#register-bio").addClass("current").show();
   });
   $("#prev").click(function() {
-    $("#register-bio").hide();
-    $("#register-basic").show();
+    $("#register-bio").removeClass("current").hide();
+    $("#register-basic").addClass("current").show();
   });
   $("#display").change(function() {
     if (this.files && this.files[0]) {
@@ -125,5 +125,21 @@ $(document).ready(function() {
       };
       reader.readAsDataURL(this.files[0]);
     }
+  });
+
+  function trySubmit() {
+    if (!$("#register-bio").hasClass("current")) {
+      $("#next").click();
+      return false;
+    }
+    return true;
+  }
+  
+  $("#register").keypress(function(e) {
+    if (e.which == 13) $("#register").submit();
+  });
+  
+  $("#register").submit(function() {
+    return trySubmit();
   });
 });

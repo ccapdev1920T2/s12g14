@@ -1,19 +1,19 @@
 // subroutes for the /recipe route
 
-const err = require('../errors');
 const express = require('express');
 const router = express();
 
 const multer = require('multer');
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads')
+  destination: function(req, file, cb) {
+    cb(null, 'uploads');
   },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + '-' + Date.now())
+  filename: function(req, file, cb) {
+    cb(null, 'profile-' + Date.now());
   }
-})
-const upload = multer(storage);
+});
+
+const upload = multer({ storage: storage });
 
 const newRecipeController = require('../controllers/new-recipe.js');
 const editRecipeController = require('../controllers/edit-recipe.js');
@@ -24,13 +24,11 @@ const viewRecipeController = require('../controllers/view-recipe.js');
 
 const reportController = require('../controllers/report.js');
 
-const Like = require('../models/like-model');
-
 router.get('/new', newRecipeController.getNew);
 router.post('/new', upload.single('display'), newRecipeController.postNew);
 
 router.get('/:id/edit', editRecipeController.getEdit);
-router.post('/:id/edit', editRecipeController.postEdit);
+router.post('/:id/edit', upload.single('display'), editRecipeController.postEdit);
 
 router.post('/:id/delete', deleteRecipeController.postDelete);
 

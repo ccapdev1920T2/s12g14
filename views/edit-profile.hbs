@@ -1,30 +1,33 @@
 <main role="main">
   <div class="container mt-3">
+    {{#with profile}}
     <form style="min-height: 800px;" action="/profile/edit" method="POST" enctype="multipart/form-data">
       <h2>Edit Profile</h2>
       <div class="form-row">
         <div class="form-group col-lg-6 col-md-12">
           <label for="input-firstname">First Name</label>
-          <input type="text" class="form-control" id="input-firstname" name="firstname">
+          <input type="text" class="form-control" id="input-firstname" name="firstname" value="{{firstname}}">
         </div>
         <div class="form-group col-lg-6 col-md-12">
           <label for="input-lastname">Last Name</label>
-          <input type="text" class="form-control" id="input-lastname" name="lastname">
+          <input type="text" class="form-control" id="input-lastname" name="lastname" value="{{lastname}}">
         </div>
         <div class="form-group col-lg-6 col-md-12">
           <label for="input-bio">Biography</label>
-          <textarea cols="30" rows="10" class="form-control" id="input-bio" name="bio"></textarea>
+          <textarea cols="30" rows="10" class="form-control" id="input-bio" name="bio">{{bio}}</textarea>
         </div>
         <div class="form-group col-lg-6 col-md-8" style="min-height:200px;">
           <label for="img-upload">New Profile Picture</label>
           <input type="file" id="img-upload" class="form-control-file" name="display">
-          <img id="img-preview" class="img-thumbnail mt-2" style="display-none; max-length: 200px; max-width: 200px;">
+          <img id="img-preview" class="img-thumbnail mt-2" style="display-none; max-length: 200px; max-width: 200px;" src="{{picture_link}}">
         </div>
       </div>
       <div class="form-group text-center mt-3">
         <button type="submit" class="btn btn-cstm-green">Finish Editing</button>
       </div>
     </form>
+    {{/with}}
+  </div>
   <!-- TODO: add aria-describedby descriptors using small for accessibility -->
 </main>
 

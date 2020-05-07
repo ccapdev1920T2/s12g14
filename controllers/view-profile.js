@@ -73,7 +73,7 @@ const viewProfileController = {
 
   getOwnProfile: function(req, res){
     if (req.session && req.session.loggedIn) {
-      Profile.findOne({ username: req.session.username }).exec(function(err, user) {
+      Profile.findOne({ username: req.session.user.username }).exec(function(err, user) {
         if (err) {
           return next(err);
         } else if (!user) {

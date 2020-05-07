@@ -19,12 +19,6 @@ const loginController = {
         else {
           req.session.loggedIn = true;
           req.session.isAdmin = user.is_admin;
-          req.session.userId = user._id;
-          req.session.username = user.username;
-          req.session.lastname = user.lastname;
-          req.session.firstname = user.firstname;
-          req.session.displayName = user.display_name;
-          req.session.pictureLink = user.picture_link;
           req.session.user = {
             id: user._id,
             username: user.username,
