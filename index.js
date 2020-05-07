@@ -82,6 +82,10 @@ app.use("/profile", profileRoute);
 const recipeRoute = require('./routes/recipe');
 app.use("/recipe", recipeRoute);
 
+const searchController = require('./controllers/search');
+
+app.get('/search', searchController.getSearch);
+
 app.get('/404', function(req, res){
   var params = {
     layout: 'with-nav',
