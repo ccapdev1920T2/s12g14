@@ -11,7 +11,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const databaseUrl = process.env.MONGODB_URI || "mongodb://localhost/cookerdb";
-const inMemory = process.env.MEMORY || false;
+const inMemory = true; //process.env.MEMORY || false;
 
 const database = require('./database');
 const dbinit = require('./dbinit');
