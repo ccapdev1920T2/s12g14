@@ -20,6 +20,10 @@ git clone https://github.com/ccapdev1920T2/s12g14.git
 2. Navigate to the project folder and install all NodeJS dependencies, which can be done by simply using `npm install`.
 3. Start the application using the command `npm start`, or `npm run devstart` if you want to make modifications while editing.
 
+## Web Deployment
+
+The application is also currently deployed [here](https://floating-shelf-11482.herokuapp.com).
+
 ## Dependencies
 
 * bcrypt
