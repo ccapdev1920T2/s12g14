@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var Comment = require('./comment-model');
+var Like = require('./like-model');
+
 var RecipeSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -41,5 +44,11 @@ var RecipeSchema = new mongoose.Schema({
     required: true
   }
 })
+
+// RecipeSchema.pre('remove', function(next) {
+//   Comment.deleteMany({recipe: this._id}).exec();
+//   Like.deleteMany({recipe: this._id}).exec();
+//   next();
+// });
 
 module.exports = mongoose.model('Recipe', RecipeSchema);

@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
-
+var Schema = mongoose.Schema;
 var ReportSchema = new mongoose.Schema({
-  _id: Schema.Types.ObjectId,
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -12,26 +11,25 @@ var ReportSchema = new mongoose.Schema({
     required: true
   },
   reported_ref: {
-    // Ref for reported ID, either User/Comment
+    // Ref for reported ID, either Recipe/Comment
     type: String,
-    enum: ['User', 'Comment'],
-    required: true
-  },
-  category: {
-    type: String,
-    enum: ['sexual','gore','others'],
+    enum: ['Recipe', 'Comment'],
     required: true
   },
   reason: {
     type: String,
     required: true
   },
-  process_timestamp: {
+  timestamp: {
     type : Date, 
+    default: Date.now,
     required: true
+  },
+  process_timestamp: {
+    type : Date,
+    default: null,
+    required: false
   }
-  
-  
 })
 
 module.exports = mongoose.model('Report', ReportSchema)
