@@ -11,11 +11,12 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const databaseUrl = process.env.MONGODB_URI || "mongodb://localhost/cookerdb";
+const inMemory = process.env.MEMORY || false;
 
 const database = require('./database');
 const dbinit = require('./dbinit');
 
-database.connect(databaseUrl);
+database.connect(inMemory ? null : databaseUrl);
 dbinit.initializeDefault(value => {
   if (value) dbinit.initializeDummy();
 });
