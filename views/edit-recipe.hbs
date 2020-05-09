@@ -71,6 +71,7 @@
 <script>
   var ingredients = [];
   var steps = [];
+  var is_submitting = false;
 
   $(document).ready(function() {
     $("#recipe-next").click(function() {
@@ -195,6 +196,10 @@
     });
 
     $("#recipe-form").submit(function() {
+      if (is_submitting) return false;
+      is_submitting = true;
+      $("#recipe-submit").attr('disabled', 'true');
+
       var recipeId = $("#recipe-id").text();
       var postLink = recipeId ? ('/recipe/' + recipeId + '/edit') : '/recipe/new';
       
@@ -225,9 +230,12 @@
         url: postLink,
         success: function(data, status, res) {
           window.location.href = '/recipe/' + data.id;
+          $("#recipe-submit").attr('disabled', 'false');
+          is_submitting = false;
         },
         error: function(data, status, res) {
-
+          $("#recipe-submit").attr('disabled', 'false');
+          is_submitting = false;
         }
       });
 

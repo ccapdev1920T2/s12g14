@@ -24,6 +24,13 @@ git clone https://github.com/ccapdev1920T2/s12g14.git
 
 The application is also currently deployed [here](https://floating-shelf-11482.herokuapp.com).
 
+## Implementation details
+
+* The admin account cannot be deleted. Any attempt to delete the admin account will be redirected to /404.
+* The password for `admin` is `password`.
+* The data store is a volatile, RAM-backed MongoDB store, which means any crashes will delete all progress.
+* A real MongoDB store would require us to shell out from our wallets, which we aren't apt to do because we aren't the stereotypical rich Lasallians who flex their credit cards.
+
 ## Dependencies
 
 * bcrypt
@@ -62,3 +69,4 @@ The application is also currently deployed [here](https://floating-shelf-11482.h
 * To the family who supported us during this hard times
 * To the friends who've made us laugh and smile while cramming together
 * To the kind professors who made time and were lenient on their requirements
+* To the authors of the pictures we've used for our sample data.
