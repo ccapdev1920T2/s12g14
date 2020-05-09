@@ -10,13 +10,3 @@ The startup scripts are in place to make running easier. To run the server:
    Take note that for every change, the server restarts, removing all changes.
 
 DISCLAIMER: Not all functionality is implemented at this stage.
-
-# Dummy Data
-
-| Username      | Password  |
-| ------------- | --------- |
-| CookingBabe   | 12345     |
-| AlmaAlyf      | 22345     |
-| PogiFood      | 32345     |
-| LoloRaffy     | 42345     |
-| TambayngDubai | 52345     |

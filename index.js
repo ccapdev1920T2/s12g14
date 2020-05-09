@@ -10,15 +10,15 @@ const bodyParser = require('body-parser');
 
 const path = require('path');
 
-const databaseUrl = process.env.DATABASE || "mongodb://localhost:27017/cookerdb";
-const inMemory = process.env.MEMORY;
+const databaseUrl = process.env.MONGODB_URI || "mongodb://localhost/cookerdb";
 
 const database = require('./database');
 const dbinit = require('./dbinit');
 
-database.connect();
-dbinit.initializeDefault();
-dbinit.initializeDummy();
+database.connect(databaseUrl);
+dbinit.initializeDefault(value => {
+  if (value) dbinit.initializeDummy();
+});
 
 const Profile = require('./models/profile-model');
 const Recipe = require('./models/recipe-model');

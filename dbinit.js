@@ -5,15 +5,27 @@ const Recipe = require('./models/recipe-model');
 const Like = require('./models/like-model');
 const Comment = require('./models/comment-model');
 
-module.exports.initializeDefault = function() {
-  var admin = {
-    username: "admin",
-    email: "admin@example.com",
-    pass_encrypted: "password",
-    is_admin: true
-  };
+module.exports.initializeDefault = function(cb) {
+  Profile.findOne({ username: "admin" }, function(error, result) {
+    if (error) {
+      console.log("WARNING: error in creating user");
+      cb(false);
+    }
 
-  Profile.create(admin);
+    if (!result) {
+      var admin = {
+        username: "admin",
+        email: "admin@example.com",
+        pass_encrypted: "password",
+        is_admin: true
+      };
+    
+      Profile.create(admin);
+      cb(true);
+    } else {
+      cb(false);
+    }
+  });
 };
 
 module.exports.initializeDummy = function() {
