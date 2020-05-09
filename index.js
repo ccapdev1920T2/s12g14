@@ -9,6 +9,12 @@ const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 
 const path = require('path');
+const fs = require('fs');
+
+const uploadsDir = './uploads';
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
 
 const databaseUrl = process.env.MONGODB_URI || "mongodb://localhost/cookerdb";
 const inMemory = true; //process.env.MEMORY || false;
