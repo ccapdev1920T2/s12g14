@@ -1,6 +1,6 @@
 # Cooker - The Cooking Recipe Website
 
-Cooker is a cooking recipe website made as a final requirement for the DLSU Course CCAPDEV (
+Cooker is a cooking recipe website made as a final requirement for the DLSU Course CCAPDEV (Web Development).
 
 ### Prerequisites
 
