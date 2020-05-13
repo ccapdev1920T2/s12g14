@@ -21,6 +21,8 @@ module.exports.connect = async (url) => {
     url = await mongod.getConnectionString();
   }
 
+  console.log("Connection string: " + url);
+
   await mongoose.connect(url, mongooseOpts);
   isOpen = true;  // TODO: check result condition
 };

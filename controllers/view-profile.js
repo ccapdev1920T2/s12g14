@@ -47,7 +47,7 @@ const viewProfileController = {
               if (err) {
                 return next(err);
               } else {
-                var liked_recipes = likes.map(d => d.recipe.toObject());
+                var liked_recipes = likes.map(d => d.recipe ? d.recipe.toObject() : null);
                 params.liked_recipes = {
                   section_name: 'liked-recipes',
                   values: liked_recipes
