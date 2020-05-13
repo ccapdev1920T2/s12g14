@@ -2,6 +2,8 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const Handlebars = require('handlebars');
 
+require('dotenv').config();
+
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -17,7 +19,7 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 const databaseUrl = process.env.MONGODB_URI || "mongodb://localhost/cookerdb";
-const inMemory = true; //process.env.MEMORY || false;
+const inMemory = false;// (process.env.MEMORY !== null && process.env.MEMORY !== undefined) ? process.env.MEMORY : true;
 
 const database = require('./database');
 const dbinit = require('./dbinit');
